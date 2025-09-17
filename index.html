@@ -9,11 +9,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    html, body {
+      height: 100%;
+    }
     body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       font-family: 'Inter', sans-serif;
       background: #f9fafb;
       color: #333;
       line-height: 1.6;
+      margin: 0;
+    }
+    main {
+      flex: 1 0 auto;
     }
 
     /* Hero Section */
@@ -26,26 +36,22 @@
       border-bottom-right-radius: 40px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     }
-
     .hero h1 {
       font-weight: 700;
       font-size: 2.8rem;
       margin-bottom: 20px;
     }
-
     .hero p {
       font-size: 1.2rem;
       opacity: 0.95;
       max-width: 720px;
       margin: auto;
     }
-
     .hero a {
       color: #ffd700;
       font-weight: 600;
       text-decoration: none;
     }
-
     .hero a:hover {
       text-decoration: underline;
     }
@@ -59,30 +65,25 @@
       transition: transform 0.35s ease, box-shadow 0.35s ease;
       cursor: pointer;
     }
-
     .project-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
     }
-
     .project-card iframe {
       width: 100%;
       height: 220px;
       border: none;
-      pointer-events: none; /* chỉ để preview, không bấm được trong card */
+      pointer-events: none;
     }
-
     .project-card .card-body {
       padding: 20px;
       text-align: center;
     }
-
     .card-title {
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 10px;
     }
-
     .card-text {
       font-size: 1rem;
       color: #555;
@@ -90,12 +91,43 @@
 
     /* Modal Custom */
     .modal-dialog {
-      max-width: 70%;
+      max-width: 75%;
     }
-
+    .modal-content {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      transform: scale(0.9);
+      opacity: 0;
+      transition: all 0.35s ease;
+    }
+    .modal.show .modal-dialog .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .modal-backdrop.show {
+      opacity: 0.6;
+      background: radial-gradient(circle at center, rgba(0,0,0,0.65), rgba(0,0,0,0.9));
+    }
+    .modal-header {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      border-bottom: none;
+      padding: 15px 20px;
+    }
+    .modal-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .btn-close {
+      filter: invert(1);
+    }
+    .modal-body {
+      padding: 0;
+    }
     .modal-body iframe {
       width: 100%;
-      height: 70vh;
+      height: 75vh;
       border: none;
     }
 
@@ -106,7 +138,7 @@
       text-align: center;
       padding: 20px 0;
       font-size: 0.95rem;
-      margin-top: 60px;
+      margin-top: 0;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
   </style>
@@ -118,8 +150,8 @@
     <h1>🚀 Welcome to AI Projects</h1>
     <p>
       A collection of interactive AI projects that make advanced technology easy and fun to explore.<br>
-      If you encounter any issues, please <a href="https://huggingface.co/spaces/ngoctuanai/project/discussions"
-        target="_blank">contact me</a>.
+      If you encounter any issues, please 
+      <a href="https://huggingface.co/spaces/ngoctuanai/project/discussions" target="_blank">contact me</a>.
     </p>
   </header>
 
