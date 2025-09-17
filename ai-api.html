@@ -1,177 +1,174 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> 
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>AI Drawing - Coming Soon</title>
+  <title>AI API - Coming Soon</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap");
 
     :root {
-      --clr-blue: #1890ff;
       --clr-green: #01c3a8;
-      --clr-orange: #ffb741;
-      --clr-red: #a63d2a;
       --bg-main: #232228;
       --bg-card-footer: #151419;
       --border-card-footer: #292929;
       --text-light: #fff;
       --text-medium: #ddd;
-      --badge-bg: #444;
+      --accent: #ffe602;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
     body {
       min-height: 100vh;
       background: var(--bg-main);
       font-family: "Nunito", sans-serif;
       display: grid;
       place-items: center;
+      color: var(--text-light);
     }
 
     section {
-      width: 100%;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      max-width: 50em;
-      margin-inline: auto;
-      gap: 3.25rem;
-      padding: 5em 1em;
+      align-items: center;
+      padding: 3em 1em;
+      width: 100%;
     }
 
     .card {
       position: relative;
-      max-width: 20rem;
-      min-height: 20rem;
+      max-width: 22rem;
       width: 90%;
-      display: grid;
-      place-content: center;
-      place-items: center;
-      text-align: center;
+      min-height: 20rem;
+      border-radius: 2rem;
       box-shadow: 1px 12px 25px rgba(0, 0, 0, 0.78);
-      border-radius: 2.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
+      box-sizing: border-box;
     }
+
     .card::before {
-      position: absolute;
       content: "";
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border-radius: 2.25rem;
+      position: absolute;
+      inset: 0;
+      border-radius: 2rem;
       z-index: -1;
-      border: 0.155rem solid transparent;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(35,34,40,0.9) 0%, rgba(1,195,168,0.06) 60%, rgba(1,195,168,0.10) 100%);
+      box-sizing: border-box;
     }
 
     .card-header {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      width: 100%;
-      padding: 0.8em 1.5em;
-      color: var(--text-medium);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 1em 1.5em 0.5em;
       font-size: 0.9em;
+      color: var(--text-medium);
     }
 
     .card-body {
-      position: absolute;
-      width: 100%;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 1em;
+      text-align: center;
+      padding: 1.5em 1.25em;
     }
+
     .card-body h3 {
-      color: var(--text-light);
-      font-size: 1.375rem;
-      margin-bottom: 0.5em;
+      font-size: 1.5rem;
       font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+      line-height: 1.05;
     }
+
     .card-body p {
-      color: var(--text-medium);
       font-size: 1rem;
+      color: var(--text-medium);
+      margin: 0.25rem 0;
+    }
+
+    .source-row {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      margin-top: 0.45rem;
+    }
+
+    .source-row .label {
+      color: var(--text-medium);
+      font-size: 0.95rem;
+    }
+
+    .source-row a {
+      color: var(--accent);
+      text-decoration: underline;
+      font-weight: 600;
+      display: inline-block;
     }
 
     .card-footer {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      width: 100%;
-      border-top: 1px solid var(--border-card-footer);
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0.75em;
-      padding: 0.7em 1.5em;
+      padding: 1em 1.5em;
       background: var(--bg-card-footer);
-      border-bottom-left-radius: 2.25rem;
-      border-bottom-right-radius: 2.25rem;
+      border-top: 1px solid var(--border-card-footer);
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
     }
 
     .card-footer a {
-      background: var(--clr-green);
-      color: #fff;
+      background: #222127;
+      color: var(--text-light);
       text-decoration: none;
       font-weight: 600;
-      padding: 0.4em 1em;
-      border-radius: 0.5em;
-      transition: background 0.25s;
+      padding: 0.6em 1.5em;
+      border-radius: 2em;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     .card-footer a:hover {
-      background: #0da890;
+      background: var(--clr-green);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(1,195,168,0.16);
     }
 
-    .badge {
-      display: inline-block;
-      background: var(--badge-bg);
-      color: var(--text-light);
-      border-radius: 1em;
-      padding: 0.3em 0.8em;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    /* Card colors */
-    .card.green {
-      background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
-    }
-    .card.green::before {
-      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-green)) border-box;
-    }
-
-    .card.orange {
-      background: radial-gradient(ellipse at right top, #ffb74194 0%, #151419 47%, #151419 100%);
-    }
-    .card.orange::before {
-      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-orange)) border-box;
-    }
-
-    .card.blue {
-      background: radial-gradient(ellipse at right top, #00458f8f 0%, #151419 45%, #151419 100%);
-    }
-    .card.blue::before {
-      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-blue)) border-box;
+    @media (max-width: 360px) {
+      .card { min-height: 18rem; }
+      .card-body h3 { font-size: 1.25rem; }
+      .source-row { font-size: 0.92rem; }
     }
   </style>
 </head>
 <body>
 
 <section>
-  <!-- AI API Basic -->
-  <div class="card green">
-    <div class="card-header">2024</div>
-    <div class="card-body">
-      <h3>⚙️ AI API</h3>
-      <p>Generate simple AI-powered artworks</p>
+  <!-- AI API -->
+  <div class="card green" role="group" aria-labelledby="card-title">
+    <div class="card-header">
+      <div class="date">2024</div>
     </div>
+    <div class="card-body">
+      <h3 id="card-title">⚙️ AI API</h3>
+
+      <div class="source-row">
+        <div class="label">Source</div>
+        <a href="https://github.com/QuantumNous/new-api" target="_blank" rel="noopener noreferrer">NewAPI</a>
+      </div>
+    </div>
+
     <div class="card-footer">
-      <a href="https://oneapiadm.onrender.com" class="btn-countdown" target="_blank">
-        Start
-      </a>
-      <span class="badge">Coming Soon</span>
+      <a href="https://oneapiadm.onrender.com" target="_blank" rel="noopener noreferrer" aria-label="Open AI API">Start</a>
     </div>
   </div>
 </section>
