@@ -57,6 +57,7 @@
       overflow: hidden;
       background: white;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: pointer;
     }
 
     .project-card:hover {
@@ -66,8 +67,9 @@
 
     .project-card iframe {
       width: 100%;
-      height: 280px;
+      height: 220px;
       border: none;
+      pointer-events: none; /* chỉ để preview, không bấm được trong card */
     }
 
     .project-card .card-body {
@@ -86,6 +88,17 @@
       color: #555;
     }
 
+    /* Modal Custom */
+    .modal-dialog {
+      max-width: 70%;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+    }
+
     /* Footer */
     footer {
       background: #111827;
@@ -96,16 +109,6 @@
       margin-top: 60px;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
-
-    footer a {
-      color: #e5e7eb;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 
@@ -115,7 +118,7 @@
     <h1>🚀 Welcome to AI Projects</h1>
     <p>
       A collection of interactive AI projects that make advanced technology easy and fun to explore.<br>
-      If you encounter any issues, please <a href="https://github.com/chokiproai/project/issues"
+      If you encounter any issues, please <a href="https://huggingface.co/spaces/ngoctuanai/project/discussions"
         target="_blank">contact me</a>.
     </p>
   </header>
@@ -125,8 +128,8 @@
     <div class="row g-4">
       <!-- AI Chat -->
       <div class="col-md-6">
-        <div class="card project-card h-100">
-          <iframe src="ai-chat.html" title="AI Chat"></iframe>
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
+          <iframe src="ai-chat.html" title="AI Chat Preview"></iframe>
           <div class="card-body">
             <h5 class="card-title">💬 AI Chat</h5>
             <p class="card-text">Chat with an AI assistant for learning, brainstorming, or entertainment.</p>
@@ -136,8 +139,8 @@
 
       <!-- AI Drawing -->
       <div class="col-md-6">
-        <div class="card project-card h-100">
-          <iframe src="ai-drawing.html" title="AI Drawing"></iframe>
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiDrawingModal">
+          <iframe src="ai-drawing.html" title="AI Drawing Preview"></iframe>
           <div class="card-body">
             <h5 class="card-title">
               🎨 AI Drawing <span class="badge bg-secondary">Coming Soon</span>
@@ -148,6 +151,36 @@
       </div>
     </div>
   </main>
+
+  <!-- AI Chat Modal -->
+  <div class="modal fade" id="aiChatModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">💬 AI Chat</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <iframe src="ai-chat.html" title="AI Chat"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Drawing Modal -->
+  <div class="modal fade" id="aiDrawingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🎨 AI Drawing</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <iframe src="ai-drawing.html" title="AI Drawing"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
