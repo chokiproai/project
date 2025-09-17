@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Chat Cards Styled</title>
+    <style>
+        /* Compiled CSS from the provided SCSS */
+        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap");
+
+        /* SCSS Variables replaced with values */
+        :root { /* Define CSS variables for potential reuse */
+          --clr-blue: #1890ff;
+          --clr-green: #01c3a8;
+          --clr-orange: #ffb741;
+          --clr-red: #a63d2a;
+          --bg-main: #232228;
+          --bg-card-footer: #151419;
+          --border-card-footer: #292929;
+          --progress-bar-bg: #363636;
+          --text-light: #fff;
+          --text-medium: #ddd;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          min-height: 100vh;
+          min-height: 100svh;
+          background: var(--bg-main);
+          font-family: "Nunito", sans-serif;
+          position: relative;
+          overflow-x: hidden;
+          display: grid;
+          place-items: center;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        section {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          max-width: 50em;
+          margin-inline: auto;
+          gap: 3.25rem;
+          position: relative;
+          z-index: 10;
+          align-items: center; /* Changed from center to stretch for potentially varying card heights */
+          padding: 5em 1em; /* Added horizontal padding */
+        }
+
+        section .card {
+          position: relative;
+          z-index: 555;
+          max-width: 20rem;
+          min-height: 20rem; /* Fixed height might cause content overflow issues */
+          width: 90%; /* Ensure it fits on smaller screens */
+          display: grid; /* This combined with absolute children is unusual, might need review */
+          place-content: center;
+          place-items: center;
+          text-align: center;
+          box-shadow: 1px 12px 25px rgba(0, 0, 0, 0.78);
+          border-radius: 2.25rem;
+          /* Backgrounds are set per color class */
+        }
+
+        section .card::before {
+          position: absolute;
+          content: "";
+          top: 0;
+          left:0; /* Added left:0 */
+          width: 100%;
+          height: 100%;
+          border-radius: 2.25rem;
+          z-index: -1;
+          border: 0.155rem solid transparent;
+          -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: destination-out;
+          mask-composite: exclude;
+          /* Background gradients are set per color class */
+        }
+
+        section .card-header {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.8em 0.5em 0em 1.5em;
+        }
+
+        section .card-header .date {
+          color: var(--text-medium);
+          font-size: 0.9em; /* Added font-size for visibility */
+        }
+
+        section .card-header svg {
+          color: var(--text-light);
+          width: 2rem; /* Adjusted size */
+          height: 2rem; /* Added height */
+          cursor: pointer;
+        }
+
+        section .card-body {
+          /* Absolute positioning might overlap footer if content is too long */
+          position: absolute;
+          width: 100%;
+          display: block;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 0.7em 1.25em 0.5em 1.5em;
+        }
+
+        section .card-body h3 {
+          color: var(--text-light);
+          font-size: 1.375rem;
+          margin-top: 0.625em;
+          margin-bottom: 0.188em;
+          text-transform: capitalize;
+          font-weight: 600;
+          word-wrap: break-word; /* Prevent overflow */
+        }
+
+        section .card-body p {
+          color: var(--text-medium);
+          font-size: 1rem;
+          letter-spacing: 0.031rem;
+          word-wrap: break-word; /* Prevent overflow */
+        }
+
+        /* Progress bar styles included but not used in this HTML */
+        section .card-body .progress {
+          margin-top: 0.938rem;
+        }
+        section .card-body .progress .progress-bar {
+          position: relative;
+          width: 100%;
+          background: var(--progress-bar-bg);
+          height: 0.313rem;
+          display: block;
+          border-radius: 3.125rem;
+        }
+        section .card-body .progress .progress-bar:after {
+          position: absolute;
+          content: "";
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 100%;
+          display: block;
+          border-radius: 3.125rem;
+          /* Width and background set per color class */
+        }
+        section .card-body .progress span:first-of-type {
+          color: var(--text-light);
+          text-align: left;
+          font-weight: 600;
+          width: 100%;
+          display: block;
+          margin-bottom: 0.313rem;
+        }
+        section .card-body .progress span {
+          margin-top: 0.313rem;
+          text-align: right;
+          display: block;
+          color: var(--text-light);
+        }
+        /* End progress bar styles */
+
+        section .card-footer {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          border-top: 0.063rem solid var(--border-card-footer);
+          display: flex;
+          justify-content: space-between; /* This will push the button to the right */
+          align-items: center; /* Vertically align items */
+          padding: 0.7em 1.25em 0.5em 1.5em;
+          background: var(--bg-card-footer);
+          border-bottom-left-radius: 2.25rem;
+          border-bottom-right-radius: 2.25rem;
+        }
+
+        /* Footer list styles included but not used in this HTML */
+        section .card-footer ul {
+          display: flex;
+          align-items: center;
+          padding-left: 0; /* Remove default padding */
+          margin-bottom: 0; /* Remove default margin */
+        }
+        section .card-footer ul li {
+          list-style-type: none;
+          display: flex;
+          margin-right: -0.625rem;
+        }
+        section .card-footer ul li img {
+          border-radius: 50%;
+          width: 1.875rem;
+          height: 1.875rem;
+          object-fit: cover;
+          border: 2px solid var(--bg-card-footer); /* Add border */
+        }
+        /* End footer list styles */
+
+        /* Add button styles included but not used in this HTML */
+        section .card-footer .btn-add {
+          width: 1.375rem;
+          height: 1.375rem;
+          border-radius: 50%;
+          color: var(--text-light);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          /* Background set per color class */
+        }
+        section .card-footer .btn-add svg {
+          width: 1rem;
+          height: 1rem; /* Added height */
+        }
+        /* End add button styles */
+
+        section .card-footer .btn-countdown {
+          background: #222127; /* Darker background for button */
+          color: var(--text-light);
+          border-radius: 2em;
+          padding: 0.625rem 1.5rem;
+          font-size: 0.9em; /* Adjusted font size */
+          transition: background-color 0.3s ease; /* Added transition */
+        }
+        /* Hover effects are set per color class */
+
+        /* --- Green Card --- */
+        section .card.green {
+          background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
+        }
+        section .card.green::before {
+          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-green)) border-box;
+        }
+        /* Styles for elements not present in current HTML */
+        section .card.green .btn-add { background: var(--clr-green); }
+        section .card.green .progress-bar:after { width: 90%; background: var(--clr-green); }
+        /* --- */
+        section .card.green .btn-countdown:hover {
+          background: var(--clr-green);
+        }
+
+        /* --- Orange Card --- */
+        section .card.orange {
+          background: radial-gradient(ellipse at right top, #ffb74194 0%, #151419 47%, #151419 100%);
+        }
+        section .card.orange::before {
+          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-orange)) border-box;
+        }
+        /* Styles for elements not present in current HTML */
+        section .card.orange .btn-add { background: var(--clr-orange); }
+        section .card.orange .progress-bar:after { width: 30%; background: var(--clr-orange); }
+        /* --- */
+        section .card.orange .btn-countdown:hover {
+          background: var(--clr-orange);
+        }
+
+        /* --- Red Card --- */
+        section .card.red {
+          background: radial-gradient(ellipse at right top, #a63d2a82 0%, #151419 47%, #151419 100%);
+        }
+        section .card.red::before {
+          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-red)) border-box;
+        }
+        /* Styles for elements not present in current HTML */
+        section .card.red .btn-add { background: var(--clr-red); }
+        section .card.red .progress-bar:after { width: 50%; background: var(--clr-red); }
+        /* --- */
+        section .card.red .btn-countdown:hover {
+          background: var(--clr-red);
+        }
+
+        /* --- Blue Card (Styles defined but not used in current HTML) --- */
+        section .card.blue {
+          background: radial-gradient(ellipse at right top, #00458f8f 0%, #151419 45%, #151419 100%);
+        }
+        section .card.blue::before {
+          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-blue)) border-box;
+        }
+        /* Styles for elements not present in current HTML */
+        section .card.blue .btn-add { background: var(--clr-blue); }
+        section .card.blue .progress-bar:after { width: 20%; background: var(--clr-blue); }
+        /* --- */
+        section .card.blue .btn-countdown:hover {
+          background: var(--clr-blue);
+        }
+
+    </style>
+</head>
+<body>
+
+<section>
+  <div class="card green">
+    <div class="card-header">
+      <div class="date">
+         2024 </div>
+    </div>
+    <div class="card-body">
+      <h3>🌟ChatGPT Free</h3>
+      <p>Free version</p>
+      <p><a href="https://github.com/chokiproai/ChatGPT-Plugins" target="_blank" style="color: #01c3a8;">Source Code</a></p>
+    </div>
+    <div class="card-footer">
+       <div></div>
+       <a href="https://chatgptplugins.vercel.app" class="btn-countdown" target="_blank">Start</a>
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-header">
+      <div class="date">
+        2024 </div>
+    </div>
+    <div class="card-body">
+      <h3>🌟Coze AI (AI Plus)</h3>
+      <p>AI Plus on Coze Platform</p>
+       </div>
+    <div class="card-footer">
+       <div></div>
+      <a href="https://www.coze.com/s/Zs8M75qpn/" class="btn-countdown" target="_blank">Start</a>
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-header">
+      <div class="date">
+         2024 </div>
+    </div>
+    <div class="card-body">
+      <h3>🌟Coze AI (Gemini Advanced)</h3>
+      <p>Gemini Advanced on Coze platform</p>
+       </div>
+    <div class="card-footer">
+      <div></div>
+      <a href="https://www.coze.com/s/Zs8M7U4Dy/" class="btn-countdown" target="_blank">Start</a>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
