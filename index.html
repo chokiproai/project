@@ -75,7 +75,7 @@
     }
     .project-card iframe {
       width: 100%;
-      height: 350px;
+      aspect-ratio: 16 / 9;
       border: none;
       pointer-events: none;
       border-radius: 12px;
@@ -96,7 +96,7 @@
 
     /* Modal Custom */
     .modal-dialog {
-      max-width: 75%;
+      max-width: 85%;
     }
     .modal-content {
       border-radius: 20px;
@@ -164,9 +164,9 @@
   <main class="container my-5">
     <div class="row g-4">
       <!-- AI Chat -->
-      <div class="col-md-6">
+      <div class="col-lg-4 col-md-6">
         <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
-          <iframe src="ai-chat.html" title="AI Chat Preview"></iframe>
+          <iframe src="ai-chat.html" title="AI Chat Preview" loading="lazy"></iframe>
           <div class="card-body">
             <h5 class="card-title">💬 AI Chat</h5>
             <p class="card-text">Chat with an AI assistant for learning, brainstorming, or entertainment.</p>
@@ -174,20 +174,33 @@
         </div>
       </div>
 
-      <!-- AI Drawing -->
-      <div class="col-md-6">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiDrawingModal">
-          <iframe src="ai-drawing.html" title="AI Drawing Preview"></iframe>
+      <!-- AI API -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiApiModal">
+          <iframe src="ai-api.html" title="AI API Preview" loading="lazy"></iframe>
           <div class="card-body">
             <h5 class="card-title">
-              🎨 AI Drawing <span class="badge bg-secondary">Coming Soon</span>
+              ⚙️ AI API <span class="badge bg-secondary">Coming Soon</span>
             </h5>
-            <p class="card-text">Discover the creative potential of AI-powered artwork and illustrations.</p>
+            <p class="card-text">Explore API for generating text, images, and intelligent responses.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Status -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#apiStatusModal">
+          <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status Preview" loading="lazy"></iframe>
+          <div class="card-body">
+            <h5 class="card-title">📡 API Status</h5>
+            <p class="card-text">Monitor real-time API health and uptime status.</p>
           </div>
         </div>
       </div>
     </div>
   </main>
+
+  <!-- Modals -->
 
   <!-- AI Chat Modal -->
   <div class="modal fade" id="aiChatModal" tabindex="-1" aria-hidden="true">
@@ -198,22 +211,37 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <iframe src="ai-chat.html" title="AI Chat"></iframe>
+          <iframe src="ai-chat.html" title="AI Chat" loading="lazy"></iframe>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AI Drawing Modal -->
-  <div class="modal fade" id="aiDrawingModal" tabindex="-1" aria-hidden="true">
+  <!-- AI API Modal -->
+  <div class="modal fade" id="aiApiModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">🎨 AI Drawing</h5>
+          <h5 class="modal-title">⚙️ AI API</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <iframe src="ai-drawing.html" title="AI Drawing"></iframe>
+          <iframe src="ai-api.html" title="AI API" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Status Modal -->
+  <div class="modal fade" id="apiStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">📡 API Status</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status" loading="lazy"></iframe>
         </div>
       </div>
     </div>

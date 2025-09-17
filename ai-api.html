@@ -102,10 +102,26 @@
       border-top: 1px solid var(--border-card-footer);
       display: flex;
       justify-content: center;
+      align-items: center;
+      gap: 0.75em;
       padding: 0.7em 1.5em;
       background: var(--bg-card-footer);
       border-bottom-left-radius: 2.25rem;
       border-bottom-right-radius: 2.25rem;
+    }
+
+    .card-footer a {
+      background: var(--clr-green);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.4em 1em;
+      border-radius: 0.5em;
+      transition: background 0.25s;
+    }
+
+    .card-footer a:hover {
+      background: #0da890;
     }
 
     .badge {
@@ -144,38 +160,17 @@
 <body>
 
 <section>
-  <!-- AI Drawing Basic -->
+  <!-- AI API Basic -->
   <div class="card green">
     <div class="card-header">2024</div>
     <div class="card-body">
-      <h3>🎨 AI Drawing (Basic)</h3>
+      <h3>⚙️ AI API</h3>
       <p>Generate simple AI-powered artworks</p>
     </div>
     <div class="card-footer">
-      <span class="badge">Coming Soon</span>
-    </div>
-  </div>
-
-  <!-- AI Drawing Advanced -->
-  <div class="card orange">
-    <div class="card-header">2024</div>
-    <div class="card-body">
-      <h3>🎨 AI Drawing (Advanced)</h3>
-      <p>Professional-level illustration with AI</p>
-    </div>
-    <div class="card-footer">
-      <span class="badge">Coming Soon</span>
-    </div>
-  </div>
-
-  <!-- AI Drawing Anime -->
-  <div class="card blue">
-    <div class="card-header">2024</div>
-    <div class="card-body">
-      <h3>🎨 AI Drawing (Anime)</h3>
-      <p>Create anime-style art with AI</p>
-    </div>
-    <div class="card-footer">
+      <a href="https://oneapiadm.onrender.com" class="btn-countdown" target="_blank">
+        Start
+      </a>
       <span class="badge">Coming Soon</span>
     </div>
   </div>
