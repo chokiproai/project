@@ -1,149 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Drawing - Showcase</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <title>AI Drawing - Coming Soon</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap");
+
+    :root {
+      --clr-blue: #1890ff;
+      --clr-green: #01c3a8;
+      --clr-orange: #ffb741;
+      --clr-red: #a63d2a;
+      --bg-main: #232228;
+      --bg-card-footer: #151419;
+      --border-card-footer: #292929;
+      --text-light: #fff;
+      --text-medium: #ddd;
+      --badge-bg: #444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f9fafb;
-      margin: 0;
-      padding: 0;
+      min-height: 100vh;
+      background: var(--bg-main);
+      font-family: "Nunito", sans-serif;
+      display: grid;
+      place-items: center;
     }
 
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #2563eb, #7c3aed);
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-      border-bottom-left-radius: 40px;
-      border-bottom-right-radius: 40px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    section {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 50em;
+      margin-inline: auto;
+      gap: 3.25rem;
+      padding: 5em 1em;
     }
 
-    .header h1 {
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-    }
-
-    .header p {
-      font-size: 1.1rem;
-      opacity: 0.95;
-    }
-
-    .header a {
-      color: #ffd700;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .header a:hover {
-      text-decoration: underline;
-    }
-
-    /* Cards */
     .card {
-      border: none;
-      border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .card-title {
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
-    .btn-custom {
-      border-radius: 12px;
-      padding: 8px 18px;
-      background: #2563eb;
-      color: white;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .btn-custom:hover {
-      background: #1d4ed8;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
-      color: #fff;
-    }
-
-    /* Footer */
-    footer {
-      background: #111827;
-      color: #9ca3af;
+      position: relative;
+      max-width: 20rem;
+      min-height: 20rem;
+      width: 90%;
+      display: grid;
+      place-content: center;
+      place-items: center;
       text-align: center;
-      padding: 20px 0;
-      margin-top: 60px;
-      font-size: 0.95rem;
+      box-shadow: 1px 12px 25px rgba(0, 0, 0, 0.78);
+      border-radius: 2.25rem;
+    }
+    .card::before {
+      position: absolute;
+      content: "";
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border-radius: 2.25rem;
+      z-index: -1;
+      border: 0.155rem solid transparent;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+    }
+
+    .card-header {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      width: 100%;
+      padding: 0.8em 1.5em;
+      color: var(--text-medium);
+      font-size: 0.9em;
+    }
+
+    .card-body {
+      position: absolute;
+      width: 100%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1em;
+    }
+    .card-body h3 {
+      color: var(--text-light);
+      font-size: 1.375rem;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+    .card-body p {
+      color: var(--text-medium);
+      font-size: 1rem;
+    }
+
+    .card-footer {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      border-top: 1px solid var(--border-card-footer);
+      display: flex;
+      justify-content: center;
+      padding: 0.7em 1.5em;
+      background: var(--bg-card-footer);
+      border-bottom-left-radius: 2.25rem;
+      border-bottom-right-radius: 2.25rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--badge-bg);
+      color: var(--text-light);
+      border-radius: 1em;
+      padding: 0.3em 0.8em;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Card colors */
+    .card.green {
+      background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
+    }
+    .card.green::before {
+      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-green)) border-box;
+    }
+
+    .card.orange {
+      background: radial-gradient(ellipse at right top, #ffb74194 0%, #151419 47%, #151419 100%);
+    }
+    .card.orange::before {
+      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-orange)) border-box;
+    }
+
+    .card.blue {
+      background: radial-gradient(ellipse at right top, #00458f8f 0%, #151419 45%, #151419 100%);
+    }
+    .card.blue::before {
+      background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-blue)) border-box;
     }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header class="header">
-    <h1>🎨 AI Drawing Projects</h1>
-    <p>Explore creative projects powered by AI. Check out the source code or try them live!</p>
-  </header>
 
-  <!-- Content -->
-  <main class="container py-5">
-    <div class="row g-4">
-      <!-- Card 1 -->
-      <div class="col-md-6">
-        <div class="card h-100 p-3">
-          <div class="card-body text-center">
-            <h5 class="card-title">1) 🌟 AI Drawing Demo</h5>
-            <p><a href="https://github.com/chokiproai/" target="_blank">Source code</a></p>
-            <a href="#" class="btn btn-custom" target="_blank">Start</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-md-6">
-        <div class="card h-100 p-3">
-          <div class="card-body text-center">
-            <h5 class="card-title">2) 🌟 Experimental Tool</h5>
-            <p class="card-text">Coming soon...</p>
-            <a href="#" class="btn btn-custom disabled">Start</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="col-md-6">
-        <div class="card h-100 p-3">
-          <div class="card-body text-center">
-            <h5 class="card-title">3) 🌟 Sketch to Art</h5>
-            <p><a href="https://github.com/chokiproai/" target="_blank">Source code</a></p>
-            <a href="#" class="btn btn-custom" target="_blank">Start</a>
-          </div>
-        </div>
-      </div>
+<section>
+  <!-- AI Drawing Basic -->
+  <div class="card green">
+    <div class="card-header">2024</div>
+    <div class="card-body">
+      <h3>🎨 AI Drawing (Basic)</h3>
+      <p>Generate simple AI-powered artworks</p>
     </div>
-  </main>
+    <div class="card-footer">
+      <span class="badge">Coming Soon</span>
+    </div>
+  </div>
 
-  <!-- Footer -->
-  <footer>
-    © 2024 AI Drawing — All rights reserved.
-  </footer>
+  <!-- AI Drawing Advanced -->
+  <div class="card orange">
+    <div class="card-header">2024</div>
+    <div class="card-body">
+      <h3>🎨 AI Drawing (Advanced)</h3>
+      <p>Professional-level illustration with AI</p>
+    </div>
+    <div class="card-footer">
+      <span class="badge">Coming Soon</span>
+    </div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AI Drawing Anime -->
+  <div class="card blue">
+    <div class="card-header">2024</div>
+    <div class="card-body">
+      <h3>🎨 AI Drawing (Anime)</h3>
+      <p>Create anime-style art with AI</p>
+    </div>
+    <div class="card-footer">
+      <span class="badge">Coming Soon</span>
+    </div>
+  </div>
+</section>
+
 </body>
-
 </html>
