@@ -205,10 +205,36 @@
         rotate: -18deg
       }
     }
+
+    /* Fullscreen Loader */
+    #pageLoader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9fafb;
+      z-index: 2000;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #pageLoader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    body.dark #pageLoader {
+      background: #1a1a1a;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Fullscreen Loader -->
+  <div id="pageLoader">
+    <div class="loader"></div>
+  </div>
+
   <!-- Hero -->
   <header class="hero">
     <h1>🚀 Welcome to AI Projects</h1>
@@ -346,6 +372,13 @@
       if (!localStorage.getItem('theme')) {
         applyTheme(e.matches ? 'dark' : 'light');
       }
+    });
+
+    // Loader hide when page loaded
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('pageLoader');
+      loader.classList.add('hidden');
+      setTimeout(() => loader.remove(), 600);
     });
   </script>
 </body>
