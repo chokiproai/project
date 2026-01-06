@@ -237,12 +237,26 @@
 
   <!-- Hero -->
   <header class="hero">
-    <h1>🚀 Welcome to AI Projects</h1>
+    <h1 data-i18n="hero.title">🚀 Welcome to AI Projects</h1>
     <p>
-      A collection of interactive AI projects that make advanced technology easy and fun to explore.<br>
-      If you encounter any issues, please 
-      <a href="https://github.com/chokiproai/project/issues" target="_blank">contact me</a>.
+      <span data-i18n="hero.desc">A collection of interactive AI projects that make advanced technology easy and fun to
+        explore.</span><br>
+      <span data-i18n="hero.contactPrefix">If you encounter any issues, please</span>
+      <a href="https://github.com/chokiproai/project/issues" target="_blank" data-i18n="hero.contactLink">contact
+        me</a>.
     </p>
+    <!-- Language Switcher -->
+    <div class="dropdown me-3" style="position: absolute; top: 15px; right: 70px;">
+      <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" id="langDropdown"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        🌐 <span id="currentLang">EN</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+        <li><a class="dropdown-item" href="#" onclick="setLanguage('en')">🇺🇸 English</a></li>
+        <li><a class="dropdown-item" href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a></li>
+      </ul>
+    </div>
+
     <!-- Dark Mode Toggle -->
     <div class="form-check form-switch dark-toggle">
       <input class="form-check-input" type="checkbox" id="darkSwitch">
@@ -257,8 +271,9 @@
         <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
           <iframe src="ai-chat.html" title="AI Chat Preview" loading="lazy"></iframe>
           <div class="card-body text-center">
-            <h5 class="card-title">💬 AI Chat</h5>
-            <p class="card-text">Chat with an AI assistant for learning, brainstorming, or entertainment.</p>
+            <h5 class="card-title" data-i18n="project.aiChat.title">💬 AI Chat</h5>
+            <p class="card-text" data-i18n="project.aiChat.desc">Chat with an AI assistant for learning, brainstorming,
+              or entertainment.</p>
           </div>
         </div>
       </div>
@@ -267,8 +282,10 @@
         <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiApiModal">
           <iframe src="ai-api.html" title="AI API Preview" loading="lazy"></iframe>
           <div class="card-body text-center">
-            <h5 class="card-title">⚙️ AI API <span class="badge bg-secondary">Coming Soon</span></h5>
-            <p class="card-text">Explore API for generating text, images, and intelligent responses.</p>
+            <h5 class="card-title" data-i18n="project.aiApi.title">⚙️ AI API <span class="badge bg-secondary"
+                data-i18n="badge.comingSoon">Coming Soon</span></h5>
+            <p class="card-text" data-i18n="project.aiApi.desc">Explore API for generating text, images, and intelligent
+              responses.</p>
           </div>
         </div>
       </div>
@@ -277,8 +294,30 @@
         <div class="card project-card" data-bs-toggle="modal" data-bs-target="#apiStatusModal">
           <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status Preview" loading="lazy"></iframe>
           <div class="card-body text-center">
-            <h5 class="card-title">📡 API Status</h5>
-            <p class="card-text">Monitor real-time API health and uptime status.</p>
+            <h5 class="card-title" data-i18n="project.apiStatus.title">📡 API Status</h5>
+            <p class="card-text" data-i18n="project.apiStatus.desc">Monitor real-time API health and uptime status.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#eventCountdownModal">
+          <iframe src="https://chokiproai.github.io/EventCountdown" title="Event Countdown Preview"
+            loading="lazy"></iframe>
+          <div class="card-body text-center">
+            <h5 class="card-title" data-i18n="project.eventCountdown.title">⏳ Event Countdown</h5>
+            <p class="card-text" data-i18n="project.eventCountdown.desc">Track and countdown to your important events in
+              style.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#totinhneModal">
+          <iframe src="https://chokiproai.github.io/totinhne" title="Love Confession Preview" loading="lazy"></iframe>
+          <div class="card-body text-center">
+            <h5 class="card-title" data-i18n="project.loveConfession.title">💌 Love Confession</h5>
+            <p class="card-text" data-i18n="project.loveConfession.desc">A sweet and interactive way to express your
+              feelings.</p>
           </div>
         </div>
       </div>
@@ -290,7 +329,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">💬 AI Chat</h5>
+          <h5 class="modal-title" data-i18n="project.aiChat.title">💬 AI Chat</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
@@ -304,7 +343,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">⚙️ AI API</h5>
+          <h5 class="modal-title" data-i18n="project.aiApi.title">⚙️ AI API</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
@@ -318,7 +357,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">📡 API Status</h5>
+          <h5 class="modal-title" data-i18n="project.apiStatus.title">📡 API Status</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
@@ -328,9 +367,64 @@
     </div>
   </div>
 
+  <div class="modal fade" id="eventCountdownModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="project.eventCountdown.title">⏳ Event Countdown</h5>
+          <div class="d-flex align-items-center">
+            <a href="https://chokiproai.github.io/EventCountdown" target="_blank"
+              class="btn btn-light btn-sm me-2 rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 32px; height: 32px;" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                <path fill-rule="evenodd"
+                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+              </svg>
+            </a>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://chokiproai.github.io/EventCountdown" title="Event Countdown"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="totinhneModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="project.loveConfession.title">💌 Love Confession</h5>
+          <div class="d-flex align-items-center">
+            <a href="https://chokiproai.github.io/totinhne" target="_blank"
+              class="btn btn-light btn-sm me-2 rounded-circle d-flex align-items-center justify-content-center"
+              style="width: 32px; height: 32px;" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                <path fill-rule="evenodd"
+                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+              </svg>
+            </a>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://chokiproai.github.io/totinhne" title="Love Confession"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
-    © 2024 ngoctuanai — All rights reserved. | <a href="#">Back to top ↑</a>
+    <span data-i18n="footer.copyright">© 2024 ngoctuanai — All rights reserved.</span> | <a href="#"
+      data-i18n="footer.backToTop">Back to top ↑</a>
   </footer>
 
   <!-- Scripts -->
@@ -380,6 +474,82 @@
       loader.classList.add('hidden');
       setTimeout(() => loader.remove(), 600);
     });
+
+    // Language Support
+    const translations = {
+      en: {
+        "hero.title": "🚀 Welcome to AI Projects",
+        "hero.desc": "A collection of interactive AI projects that make advanced technology easy and fun to explore.",
+        "hero.contactPrefix": "If you encounter any issues, please",
+        "hero.contactLink": "contact me",
+        "project.aiChat.title": "💬 AI Chat",
+        "project.aiChat.desc": "Chat with an AI assistant for learning, brainstorming, or entertainment.",
+        "project.aiApi.title": "⚙️ AI API",
+        "project.aiApi.desc": "Explore API for generating text, images, and intelligent responses.",
+        "project.apiStatus.title": "📡 API Status",
+        "project.apiStatus.desc": "Monitor real-time API health and uptime status.",
+        "project.eventCountdown.title": "⏳ Event Countdown",
+        "project.eventCountdown.desc": "Track and countdown to your important events in style.",
+        "project.loveConfession.title": "💌 Love Confession",
+        "project.loveConfession.desc": "A sweet and interactive way to express your feelings.",
+        "badge.comingSoon": "Coming Soon",
+        "btn.openInNewTab": "Open in New Tab",
+        "footer.copyright": "© 2024 ngoctuanai — All rights reserved.",
+        "footer.backToTop": "Back to top ↑"
+      },
+      vi: {
+        "hero.title": "🚀 Chào mừng đến với các Dự án AI",
+        "hero.desc": "Một bộ sưu tập các dự án AI tương tác giúp công nghệ tiên tiến trở nên dễ dàng và thú vị để khám phá.",
+        "hero.contactPrefix": "Nếu bạn gặp bất kỳ vấn đề nào, vui lòng",
+        "hero.contactLink": "liên hệ tôi",
+        "project.aiChat.title": "💬 Trò chuyện AI",
+        "project.aiChat.desc": "Trò chuyện với trợ lý AI để học tập, suy nghĩ ý tưởng hoặc giải trí.",
+        "project.aiApi.title": "⚙️ API AI",
+        "project.aiApi.desc": "Khám phá API để tạo văn bản, hình ảnh và phản hồi thông minh.",
+        "project.apiStatus.title": "📡 Trạng thái API",
+        "project.apiStatus.desc": "Theo dõi sức khỏe và thời gian hoạt động của API theo thời gian thực.",
+        "project.eventCountdown.title": "⏳ Đếm ngược Sự kiện",
+        "project.eventCountdown.desc": "Theo dõi và đếm ngược đến các sự kiện quan trọng theo phong cách của bạn.",
+        "project.loveConfession.title": "💌 Tỏ tình né",
+        "project.loveConfession.desc": "Một cách ngọt ngào và tương tác để bày tỏ tình cảm của bạn.",
+        "badge.comingSoon": "Sắp ra mắt",
+        "btn.openInNewTab": "Mở trong tab mới",
+        "footer.copyright": "© 2024 ngoctuanai — Đã đăng ký bản quyền.",
+        "footer.backToTop": "Lên đầu trang ↑"
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (translations[lang][key]) {
+          el.setAttribute('title', translations[lang][key]);
+        }
+      });
+
+      document.getElementById('currentLang').innerText = lang === 'vi' ? 'VI' : 'EN';
+      localStorage.setItem('language', lang);
+    }
+
+    // Auto-detect language
+    const savedLang = localStorage.getItem('language');
+    if (savedLang) {
+      setLanguage(savedLang);
+    } else {
+      const userLang = navigator.language || navigator.userLanguage;
+      if (userLang.startsWith('vi')) {
+        setLanguage('vi');
+      } else {
+        setLanguage('en');
+      }
+    }
   </script>
 </body>
+
 </html>
