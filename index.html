@@ -148,41 +148,96 @@
       gap: 12px;
     }
 
-    /* Dark Mode Toggle */
+    /* Dark Mode Toggle - Custom Slide Switch */
     .dark-toggle {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50px;
-      padding: 8px 14px;
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .dark-toggle:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .dark-toggle .form-check-input {
       cursor: pointer;
-      width: 42px;
-      height: 22px;
-      background-color: rgba(255, 255, 255, 0.3);
-      border: none;
+    }
+
+    .dark-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-slider {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      border-radius: 30px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(245, 158, 11, 0.3);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-slider .icon-sun,
+    .toggle-slider .icon-moon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
       transition: all 0.3s ease;
     }
 
-    .dark-toggle .form-check-input:checked {
-      background-color: #667eea;
+    .toggle-slider .icon-sun {
+      left: 8px;
+      opacity: 1;
     }
 
-    .dark-toggle .form-check-input:focus {
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    .toggle-slider .icon-moon {
+      right: 8px;
+      opacity: 0.5;
+    }
+
+    /* Checked State (Dark Mode ON) */
+    .dark-toggle input:checked+.toggle-slider {
+      background: linear-gradient(135deg, #4338ca, #6366f1);
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 2px 8px rgba(99, 102, 241, 0.4);
+    }
+
+    .dark-toggle input:checked+.toggle-slider::before {
+      transform: translateX(30px);
+    }
+
+    .dark-toggle input:checked+.toggle-slider .icon-sun {
+      opacity: 0.5;
+    }
+
+    .dark-toggle input:checked+.toggle-slider .icon-moon {
+      opacity: 1;
+    }
+
+    /* Hover Effect */
+    .dark-toggle:hover .toggle-slider {
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .dark-toggle:hover input:checked+.toggle-slider {
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 4px 15px rgba(99, 102, 241, 0.5);
     }
 
     /* Language Dropdown Premium Style */
@@ -439,10 +494,13 @@
           <li><a class="dropdown-item" href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a></li>
         </ul>
       </div>
-      <div class="dark-toggle">
-        <input class="form-check-input" type="checkbox" id="darkSwitch">
-        <label class="form-check-label text-light" for="darkSwitch">🌙</label>
-      </div>
+      <label class="dark-toggle">
+        <input type="checkbox" id="darkSwitch">
+        <span class="toggle-slider">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </span>
+      </label>
     </div>
   </header>
 
