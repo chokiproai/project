@@ -43,11 +43,192 @@
       font-weight: 700;
     }
 
-    /* Dark Mode Toggle */
-    .dark-toggle {
+    /* Glass Button */
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white !important;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Premium About Button */
+    .btn-premium {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white !important;
+      text-decoration: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-size: 200% 200%;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow:
+        0 4px 15px rgba(102, 126, 234, 0.4),
+        0 0 0 0 rgba(240, 147, 251, 0);
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .btn-premium::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow:
+        0 8px 25px rgba(102, 126, 234, 0.5),
+        0 0 30px rgba(240, 147, 251, 0.3);
+    }
+
+    .btn-premium:hover::before {
+      opacity: 1;
+    }
+
+    .btn-premium::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100%;
+      top: 0;
+      left: -100px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-premium:hover::after {
+      left: 100%;
+    }
+
+    /* Header Controls Container */
+    .header-controls {
       position: absolute;
       top: 15px;
       right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Dark Mode Toggle */
+    .dark-toggle {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .dark-toggle:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .dark-toggle .form-check-input {
+      cursor: pointer;
+      width: 42px;
+      height: 22px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .dark-toggle .form-check-input:checked {
+      background-color: #667eea;
+    }
+
+    .dark-toggle .form-check-input:focus {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Language Dropdown Premium Style */
+    .lang-dropdown .dropdown-toggle {
+      background: rgba(255, 255, 255, 0.15) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 50px !important;
+      padding: 8px 18px !important;
+      font-weight: 600;
+      color: white !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .lang-dropdown .dropdown-toggle:hover {
+      background: rgba(255, 255, 255, 0.25) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .lang-dropdown .dropdown-toggle:focus {
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3) !important;
+    }
+
+    .lang-dropdown .dropdown-menu {
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      margin-top: 8px !important;
+    }
+
+    .lang-dropdown .dropdown-item {
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 16px;
+      transition: all 0.2s ease;
+    }
+
+    .lang-dropdown .dropdown-item:hover {
+      background: rgba(102, 126, 234, 0.3);
+      color: white;
     }
 
     /* Project Cards */
@@ -245,24 +426,26 @@
       <a href="https://github.com/chokiproai/project/issues" target="_blank" data-i18n="hero.contactLink">contact
         me</a>.
     </p>
-    <!-- Language Switcher -->
-    <div class="dropdown me-3" style="position: absolute; top: 15px; right: 70px;">
-      <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" id="langDropdown"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        🌐 <span id="currentLang">EN</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-        <li><a class="dropdown-item" href="#" onclick="setLanguage('en')">🇺🇸 English</a></li>
-        <li><a class="dropdown-item" href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a></li>
-      </ul>
-    </div>
-
-    <!-- Dark Mode Toggle -->
-    <div class="form-check form-switch dark-toggle">
-      <input class="form-check-input" type="checkbox" id="darkSwitch">
-      <label class="form-check-label text-light" for="darkSwitch">🌙</label>
+    <!-- Header Controls -->
+    <div class="header-controls">
+      <a href="about.html" class="btn-premium" data-i18n="hero.about">🧑‍💻 About Me</a>
+      <div class="dropdown lang-dropdown">
+        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" id="langDropdown"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          🌐 <span id="currentLang">EN</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+          <li><a class="dropdown-item" href="#" onclick="setLanguage('en')">🇺🇸 English</a></li>
+          <li><a class="dropdown-item" href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a></li>
+        </ul>
+      </div>
+      <div class="dark-toggle">
+        <input class="form-check-input" type="checkbox" id="darkSwitch">
+        <label class="form-check-label text-light" for="darkSwitch">🌙</label>
+      </div>
     </div>
   </header>
+
 
   <!-- Projects -->
   <main class="container my-5">
@@ -436,10 +619,22 @@
     function applyTheme(theme) {
       if (theme === 'dark') {
         body.classList.add('dark');
+        document.querySelectorAll('iframe').forEach(iframe => {
+          if (iframe.contentWindow) {
+            iframe.contentWindow.postMessage('theme:dark', '*');
+          }
+        });
         toggle.checked = true;
+        localStorage.setItem('theme', 'dark');
       } else {
         body.classList.remove('dark');
+        document.querySelectorAll('iframe').forEach(iframe => {
+          if (iframe.contentWindow) {
+            iframe.contentWindow.postMessage('theme:light', '*');
+          }
+        });
         toggle.checked = false;
+        localStorage.setItem('theme', 'light');
       }
     }
 
@@ -455,10 +650,8 @@
     toggle.addEventListener('change', () => {
       if (toggle.checked) {
         applyTheme('dark');
-        localStorage.setItem('theme', 'dark');
       } else {
         applyTheme('light');
-        localStorage.setItem('theme', 'light');
       }
     });
 
@@ -482,6 +675,7 @@
         "hero.desc": "A collection of interactive AI projects that make advanced technology easy and fun to explore.",
         "hero.contactPrefix": "If you encounter any issues, please",
         "hero.contactLink": "contact me",
+        "hero.about": "🧑‍💻 About Me",
         "project.aiChat.title": "💬 AI Chat",
         "project.aiChat.desc": "Chat with an AI assistant for learning, brainstorming, or entertainment.",
         "project.aiApi.title": "⚙️ AI API",
@@ -502,6 +696,16 @@
         "hero.desc": "Một bộ sưu tập các dự án AI tương tác giúp công nghệ tiên tiến trở nên dễ dàng và thú vị để khám phá.",
         "hero.contactPrefix": "Nếu bạn gặp bất kỳ vấn đề nào, vui lòng",
         "hero.contactLink": "liên hệ tôi",
+        "hero.about": "🧑‍💻 Giới thiệu",
+        "about.assistance.label": "Tìm kiếm sự giúp đỡ:",
+        "about.assistance.text": "Mọi lời khuyên chuyên môn về tối ưu hóa mã và nâng cao hiệu quả AI đều rất được trân trọng.",
+        "about.conversations.label": "Trò chuyện AI:",
+        "about.conversations.text": "Tò mò về AI? Hãy nhắn tin cho tôi! Tôi sẽ cố gắng đưa ra những phản hồi sâu sắc nhất có thể.",
+        "about.pronouns.label": "Đại từ:",
+        "about.pronouns.text": "Anh ấy/Cậu ấy",
+        "about.projects.label": "Xem các Dự án của tôi:",
+        "about.projects.text": "Đây là nơi bạn có thể tìm thấy tất cả những thứ hay ho mà tôi đang làm —",
+        "about.projects.link": "Tất cả dự án",
         "project.aiChat.title": "💬 Trò chuyện AI",
         "project.aiChat.desc": "Trò chuyện với trợ lý AI để học tập, suy nghĩ ý tưởng hoặc giải trí.",
         "project.aiApi.title": "⚙️ API AI",
@@ -510,7 +714,7 @@
         "project.apiStatus.desc": "Theo dõi sức khỏe và thời gian hoạt động của API theo thời gian thực.",
         "project.eventCountdown.title": "⏳ Đếm ngược Sự kiện",
         "project.eventCountdown.desc": "Theo dõi và đếm ngược đến các sự kiện quan trọng theo phong cách của bạn.",
-        "project.loveConfession.title": "💌 Tỏ tình né",
+        "project.loveConfession.title": "💌 Tỏ tình nè",
         "project.loveConfession.desc": "Một cách ngọt ngào và tương tác để bày tỏ tình cảm của bạn.",
         "badge.comingSoon": "Sắp ra mắt",
         "btn.openInNewTab": "Mở trong tab mới",
@@ -530,6 +734,12 @@
         const key = el.getAttribute('data-i18n-title');
         if (translations[lang][key]) {
           el.setAttribute('title', translations[lang][key]);
+        }
+      });
+
+      document.querySelectorAll('iframe').forEach(iframe => {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage('lang:' + lang, '*');
         }
       });
 
