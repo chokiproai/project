@@ -1,380 +1,373 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>AI Chat Cards Styled</title>
-    <style>
-        /* Compiled CSS from the provided SCSS */
-        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap");
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>AI Chat — ngoctuanai</title>
 
-        /* SCSS Variables replaced with values */
-        :root { /* Define CSS variables for potential reuse */
-          --clr-blue: #1890ff;
-          --clr-green: #01c3a8;
-          --clr-orange: #ffb741;
-          --clr-red: #a63d2a;
-          --bg-main: #232228;
-          --bg-card-footer: #151419;
-          --border-card-footer: #292929;
-          --progress-bar-bg: #363636;
-          --text-light: #fff;
-          --text-medium: #ddd;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
+  <style>
+    :root {
+      --bg-page: #f5f5f7;
+      --bg-card: #ffffff;
+      --bg-pill: rgba(0, 0, 0, 0.05);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #86868b;
+      --apple-blue: #0071e3;
+      --border-card: rgba(0, 0, 0, 0.06);
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
 
-        body {
-          min-height: 100vh;
-          min-height: 100svh;
-          background: var(--bg-main);
-          font-family: "Nunito", sans-serif;
-          position: relative;
-          overflow-x: hidden;
-          display: grid;
-          place-items: center;
-        }
+    body.dark {
+      --bg-page: #000000;
+      --bg-card: #141416;
+      --bg-pill: rgba(255, 255, 255, 0.08);
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #6e6e73;
+      --apple-blue: #0071e3;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
 
-        a {
-          text-decoration: none;
-          display: inline-block;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        section {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          max-width: 50em;
-          margin-inline: auto;
-          gap: 3.25rem;
-          position: relative;
-          z-index: 10;
-          align-items: center; /* Changed from center to stretch for potentially varying card heights */
-          padding: 5em 1em; /* Added horizontal padding */
-        }
+    body {
+      min-height: 100vh;
+      background: var(--bg-page);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 36px 24px;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        section .card {
-          position: relative;
-          z-index: 555;
-          max-width: 20rem;
-          min-height: 20rem; /* Fixed height might cause content overflow issues */
-          width: 90%; /* Ensure it fits on smaller screens */
-          display: grid; /* This combined with absolute children is unusual, might need review */
-          place-content: center;
-          place-items: center;
-          text-align: center;
-          box-shadow: 1px 12px 25px rgba(0, 0, 0, 0.78);
-          border-radius: 2.25rem;
-          /* Backgrounds are set per color class */
-        }
+    .suite-container {
+      width: min(940px, 100%);
+      margin: 0 auto;
+    }
 
-        section .card::before {
-          position: absolute;
-          content: "";
-          top: 0;
-          left:0; /* Added left:0 */
-          width: 100%;
-          height: 100%;
-          border-radius: 2.25rem;
-          z-index: -1;
-          border: 0.155rem solid transparent;
-          -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: destination-out;
-          mask-composite: exclude;
-          /* Background gradients are set per color class */
-        }
+    .suite-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
 
-        section .card-header {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0.8em 0.5em 0em 1.5em;
-        }
+    .suite-header h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
 
-        section .card-header .date {
-          color: var(--text-medium);
-          font-size: 0.9em; /* Added font-size for visibility */
-        }
+    .suite-header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
 
-        section .card-header svg {
-          color: var(--text-light);
-          width: 2rem; /* Adjusted size */
-          height: 2rem; /* Added height */
-          cursor: pointer;
-        }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
 
-        section .card-body {
-          /* Absolute positioning might overlap footer if content is too long */
-          position: absolute;
-          width: 100%;
-          display: block;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          padding: 0.7em 1.25em 0.5em 1.5em;
-        }
+    @media (max-width: 640px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        section .card-body h3 {
-          color: var(--text-light);
-          font-size: 1.375rem;
-          margin-top: 0.625em;
-          margin-bottom: 0.188em;
-          text-transform: capitalize;
-          font-weight: 600;
-          word-wrap: break-word; /* Prevent overflow */
-        }
+    .app-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        section .card-body p {
-          color: var(--text-medium);
-          font-size: 1rem;
-          letter-spacing: 0.031rem;
-          word-wrap: break-word; /* Prevent overflow */
-        }
+    .app-card:hover {
+      transform: scale(1.02);
+    }
 
-        /* Progress bar styles included but not used in this HTML */
-        section .card-body .progress {
-          margin-top: 0.938rem;
-        }
-        section .card-body .progress .progress-bar {
-          position: relative;
-          width: 100%;
-          background: var(--progress-bar-bg);
-          height: 0.313rem;
-          display: block;
-          border-radius: 3.125rem;
-        }
-        section .card-body .progress .progress-bar:after {
-          position: absolute;
-          content: "";
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 100%;
-          display: block;
-          border-radius: 3.125rem;
-          /* Width and background set per color class */
-        }
-        section .card-body .progress span:first-of-type {
-          color: var(--text-light);
-          text-align: left;
-          font-weight: 600;
-          width: 100%;
-          display: block;
-          margin-bottom: 0.313rem;
-        }
-        section .card-body .progress span {
-          margin-top: 0.313rem;
-          text-align: right;
-          display: block;
-          color: var(--text-light);
-        }
-        /* End progress bar styles */
+    .app-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-        section .card-footer {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          width: 100%;
-          border-top: 0.063rem solid var(--border-card-footer);
-          display: flex;
-          justify-content: center; /* Center the button horizontally */
-          align-items: center; /* Vertically align items */
-          padding: 0.7em 1.25em 0.5em 1.5em;
-          background: var(--bg-card-footer);
-          border-bottom-left-radius: 2.25rem;
-          border-bottom-right-radius: 2.25rem;
-        }
+    /* macOS Squircle App Icon */
+    .squircle-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        /* Footer list styles included but not used in this HTML */
-        section .card-footer ul {
-          display: flex;
-          align-items: center;
-          padding-left: 0; /* Remove default padding */
-          margin-bottom: 0; /* Remove default margin */
-        }
-        section .card-footer ul li {
-          list-style-type: none;
-          display: flex;
-          margin-right: -0.625rem;
-        }
-        section .card-footer ul li img {
-          border-radius: 50%;
-          width: 1.875rem;
-          height: 1.875rem;
-          object-fit: cover;
-          border: 2px solid var(--bg-card-footer); /* Add border */
-        }
-        /* End footer list styles */
+    .squircle-icon.blue { background: linear-gradient(135deg, #0071e3, #5ac8fa); }
+    .squircle-icon.green { background: linear-gradient(135deg, #30d158, #00c7be); }
+    .squircle-icon.orange { background: linear-gradient(135deg, #ff9f0a, #ff375f); }
+    .squircle-icon.purple { background: linear-gradient(135deg, #bf5af2, #5e5ce6); }
 
-        /* Add button styles included but not used in this HTML */
-        section .card-footer .btn-add {
-          width: 1.375rem;
-          height: 1.375rem;
-          border-radius: 50%;
-          color: var(--text-light);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          /* Background set per color class */
-        }
-        section .card-footer .btn-add svg {
-          width: 1rem;
-          height: 1rem; /* Added height */
-        }
-        /* End add button styles */
+    .app-title-group {
+      min-width: 0;
+    }
 
-        section .card-footer .btn-countdown {
-          background: #222127; /* Darker background for button */
-          color: var(--text-light);
-          border-radius: 2em;
-          padding: 0.625rem 1.5rem;
-          font-size: 0.9em; /* Adjusted font size */
-          transition: background-color 0.3s ease; /* Added transition */
-        }
-        /* Hover effects are set per color class */
+    .app-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      margin-bottom: 2px;
+    }
 
-        /* --- Green Card --- */
-        section .card.green {
-          background: radial-gradient(ellipse at right top, #107667ed 0%, #151419 47%, #151419 100%);
-        }
-        section .card.green::before {
-          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-green)) border-box;
-        }
-        /* Styles for elements not present in current HTML */
-        section .card.green .btn-add { background: var(--clr-green); }
-        section .card.green .progress-bar:after { width: 90%; background: var(--clr-green); }
-        /* --- */
-        section .card.green .btn-countdown:hover {
-          background: var(--clr-green);
-        }
+    .app-title-group h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
 
-        /* --- Orange Card --- */
-        section .card.orange {
-          background: radial-gradient(ellipse at right top, #ffb74194 0%, #151419 47%, #151419 100%);
-        }
-        section .card.orange::before {
-          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-orange)) border-box;
-        }
-        /* Styles for elements not present in current HTML */
-        section .card.orange .btn-add { background: var(--clr-orange); }
-        section .card.orange .progress-bar:after { width: 30%; background: var(--clr-orange); }
-        /* --- */
-        section .card.orange .btn-countdown:hover {
-          background: var(--clr-orange);
-        }
+    .app-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
 
-        /* --- Red Card --- */
-        section .card.red {
-          background: radial-gradient(ellipse at right top, #a63d2a82 0%, #151419 47%, #151419 100%);
-        }
-        section .card.red::before {
-          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-red)) border-box;
-        }
-        /* Styles for elements not present in current HTML */
-        section .card.red .btn-add { background: var(--clr-red); }
-        section .card.red .progress-bar:after { width: 50%; background: var(--clr-red); }
-        /* --- */
-        section .card.red .btn-countdown:hover {
-          background: var(--clr-red);
-        }
+    .app-desc a {
+      color: #2997ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-        /* --- Blue Card (Styles defined but not used in current HTML) --- */
-        section .card.blue {
-          background: radial-gradient(ellipse at right top, #00458f8f 0%, #151419 45%, #151419 100%);
-        }
-        section .card.blue::before {
-          background: linear-gradient(45deg, #232228, #232228, #232228, #232228, var(--clr-blue)) border-box;
-        }
-        /* Styles for elements not present in current HTML */
-        section .card.blue .btn-add { background: var(--clr-blue); }
-        section .card.blue .progress-bar:after { width: 20%; background: var(--clr-blue); }
-        /* --- */
-        section .card.blue .btn-countdown:hover {
-          background: var(--clr-blue);
-        }
+    .app-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-card);
+    }
 
-    </style>
+    .source-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .source-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* App Store "GET / OPEN" Pill Button */
+    .btn-app-open {
+      background: var(--apple-blue);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 20px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-app-open:hover {
+      background: #0077ed;
+      transform: scale(1.04);
+    }
+  </style>
 </head>
-<body>
 
-<section>
-  <!-- 🌟ChatGPT-Plugins | HuggingFace -->
-  <div class="card blue">
-    <div class="card-header">
-      <div class="date">2024</div>
+<body class="dark">
+  <div class="suite-container">
+    <div class="suite-header">
+      <h2 data-i18n="hub.title">AI Chat Models.</h2>
+      <p data-i18n="hub.subtitle">Choose an intelligent assistant crafted for reasoning, coding, and creativity.</p>
     </div>
-    <div class="card-body">
-      <h3>🌟ChatGPT-Plugins | HuggingFace | (Free)</h3>
-      <p>Hosted on HuggingFace Spaces</p>
-      <p><a href="https://github.com/chokiproai/ChatGPT-Plugins" target="_blank" style="color: var(--clr-blue);">Source Code</a></p>
-    </div>
-    <div class="card-footer">
-      <div></div>
-      <a href="https://ngoctuanai-chatgptplugins.hf.space" class="btn-countdown" target="_blank">Start</a>
-    </div>
+
+    <section class="cards-grid">
+      <!-- 1. HuggingFace -->
+      <div class="app-card">
+        <div>
+          <div class="app-top">
+            <div class="squircle-icon blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="app-title-group">
+              <div class="app-eyebrow" data-i18n="badge.free">Free Access • 2024</div>
+              <h3>ChatGPT-Plugins (HF)</h3>
+            </div>
+          </div>
+          <p class="app-desc" style="margin-top: 14px;" data-i18n="card1.desc">Hosted on HuggingFace Spaces.</p>
+        </div>
+
+        <div class="app-footer">
+          <a href="https://github.com/chokiproai/ChatGPT-Plugins" target="_blank" rel="noopener noreferrer" class="source-link" data-i18n="link.source">Source Code ›</a>
+          <a href="https://ngoctuanai-chatgptplugins.hf.space" target="_blank" rel="noopener noreferrer" class="btn-app-open" data-i18n="btn.start">Open</a>
+        </div>
+      </div>
+
+      <!-- 2. Vercel -->
+      <div class="app-card">
+        <div>
+          <div class="app-top">
+            <div class="squircle-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3 9 16H3z"/>
+              </svg>
+            </div>
+            <div class="app-title-group">
+              <div class="app-eyebrow">Vercel Edge • 2024</div>
+              <h3>ChatGPT-Plugins (API)</h3>
+            </div>
+          </div>
+          <p class="app-desc" style="margin-top: 14px;">
+            <span data-i18n="card2.desc">Hosted on Vercel. Using</span>
+            <a href="https://oneapiadm.onrender.com" target="_blank" rel="noopener noreferrer" data-i18n="card2.api">(API) Coming Soon</a>
+          </p>
+        </div>
+
+        <div class="app-footer">
+          <a href="https://github.com/chokiproai/ChatGPT-Plugins" target="_blank" rel="noopener noreferrer" class="source-link" data-i18n="link.source">Source Code ›</a>
+          <a href="https://chatgptplugins.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-app-open" data-i18n="btn.start">Open</a>
+        </div>
+      </div>
+
+      <!-- 3. Coze AI Plus -->
+      <div class="app-card">
+        <div>
+          <div class="app-top">
+            <div class="squircle-icon orange">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div class="app-title-group">
+              <div class="app-eyebrow">Coze Platform • 2024</div>
+              <h3>Coze AI (AI Plus)</h3>
+            </div>
+          </div>
+          <p class="app-desc" style="margin-top: 14px;" data-i18n="card3.desc">AI Plus on Coze Platform.</p>
+        </div>
+
+        <div class="app-footer">
+          <span class="source-link">Coze Bot</span>
+          <a href="https://www.coze.com/s/Zs8M75qpn/" target="_blank" rel="noopener noreferrer" class="btn-app-open" data-i18n="btn.start">Open</a>
+        </div>
+      </div>
+
+      <!-- 4. Coze Gemini Advanced -->
+      <div class="app-card">
+        <div>
+          <div class="app-top">
+            <div class="squircle-icon purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+              </svg>
+            </div>
+            <div class="app-title-group">
+              <div class="app-eyebrow">Google Gemini • 2024</div>
+              <h3>Coze AI (Gemini Advanced)</h3>
+            </div>
+          </div>
+          <p class="app-desc" style="margin-top: 14px;" data-i18n="card4.desc">Gemini Advanced on Coze platform.</p>
+        </div>
+
+        <div class="app-footer">
+          <span class="source-link">Coze Bot</span>
+          <a href="https://www.coze.com/s/Zs8M7U4Dy/" target="_blank" rel="noopener noreferrer" class="btn-app-open" data-i18n="btn.start">Open</a>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- 🌟ChatGPT-Plugins | Vercel -->
-  <div class="card green">
-    <div class="card-header">
-      <div class="date">2024</div>
-    </div>
-    <div class="card-body">
-      <h3>🌟ChatGPT-Plugins | Vercel | (API)</h3>
-      <p>Hosted on Vercel. Using<a href="https://oneapiadm.onrender.com" target="_blank" style="color: #ffe602; text-decoration: underline;">(API) Coming Soon</a></p>
-      <p><a href="https://github.com/chokiproai/ChatGPT-Plugins" target="_blank" style="color: #01c3a8;">Source Code</a></p>
-    </div>
-    <div class="card-footer">
-      <div></div>
-      <a href="https://chatgptplugins.vercel.app" class="btn-countdown" target="_blank">Start</a>
-    </div>
-  </div>
+  <script>
+    const translations = {
+      en: {
+        "hub.title": "AI Chat Models.",
+        "hub.subtitle": "Choose an intelligent assistant crafted for reasoning, coding, and creativity.",
+        "badge.free": "Free Access • 2024",
+        "card1.desc": "Hosted on HuggingFace Spaces.",
+        "card2.desc": "Hosted on Vercel. Using",
+        "card2.api": "(API) Coming Soon",
+        "card3.desc": "AI Plus on Coze Platform.",
+        "card4.desc": "Gemini Advanced on Coze platform.",
+        "link.source": "Source Code ›",
+        "btn.start": "Open"
+      },
+      vi: {
+        "hub.title": "Các mô hình Trò chuyện AI.",
+        "hub.subtitle": "Chọn trợ lý thông minh tối ưu cho tư duy, lập trình và sáng tạo nội dung.",
+        "badge.free": "Miễn phí • 2024",
+        "card1.desc": "Được lưu trữ trên HuggingFace Spaces.",
+        "card2.desc": "Lưu trữ trên Vercel. Sử dụng",
+        "card2.api": "(API) Sắp ra mắt",
+        "card3.desc": "AI Plus trên nền tảng Coze.",
+        "card4.desc": "Gemini Advanced trên nền tảng Coze.",
+        "link.source": "Mã nguồn ›",
+        "btn.start": "Mở"
+      }
+    };
 
-  <!-- 🌟Coze AI (AI Plus) -->
-  <div class="card orange">
-    <div class="card-header">
-      <div class="date">2024</div>
-    </div>
-    <div class="card-body">
-      <h3>🌟Coze AI (AI Plus)</h3>
-      <p>AI Plus on Coze Platform</p>
-    </div>
-    <div class="card-footer">
-      <div></div>
-      <a href="https://www.coze.com/s/Zs8M75qpn/" class="btn-countdown" target="_blank">Start</a>
-    </div>
-  </div>
+    function applyTheme(theme) {
+      if (theme === 'light') {
+        document.body.classList.remove('dark');
+      } else {
+        document.body.classList.add('dark');
+      }
+    }
 
-  <!-- 🌟Coze AI (Gemini Advanced) -->
-  <div class="card red">
-    <div class="card-header">
-      <div class="date">2024</div>
-    </div>
-    <div class="card-body">
-      <h3>🌟Coze AI (Gemini Advanced)</h3>
-      <p>Gemini Advanced on Coze platform</p>
-    </div>
-    <div class="card-footer">
-      <div></div>
-      <a href="https://www.coze.com/s/Zs8M7U4Dy/" class="btn-countdown" target="_blank">Start</a>
-    </div>
-  </div>
-</section>
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+    }
 
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) applyTheme(savedTheme);
+
+    const savedLang = localStorage.getItem('language');
+    if (savedLang) applyLang(savedLang);
+
+    window.addEventListener('message', (e) => {
+      if (typeof e.data === 'string') {
+        if (e.data.startsWith('theme:')) {
+          applyTheme(e.data.split(':')[1]);
+        } else if (e.data.startsWith('lang:')) {
+          applyLang(e.data.split(':')[1]);
+        }
+      }
+    });
+  </script>
 </body>
+
 </html>

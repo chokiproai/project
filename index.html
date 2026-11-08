@@ -4,700 +4,1322 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Projects - Showcase</title>
-  <meta name="theme-color" content="#2563eb">
+  <title>ngoctuanai — AI & Interactive Experiences</title>
+  <meta name="theme-color" content="#000000">
 
-  <!-- Bootstrap + Fonts -->
+  <!-- Bootstrap 5.3 (Modal engine) + Inter (SF Pro metrics fallback) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f9fafb;
-      color: #333;
+    :root {
+      --bg-page: #f5f5f7;
+      --bg-card: #ffffff;
+      --bg-card-secondary: #fbfbfd;
+      --bg-nav: rgba(245, 245, 247, 0.78);
+      --bg-pill: rgba(0, 0, 0, 0.05);
+      --bg-pill-hover: rgba(0, 0, 0, 0.09);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #86868b;
+      --apple-blue: #0071e3;
+      --apple-blue-hover: #0077ed;
+      --border-card: rgba(0, 0, 0, 0.06);
+      --border-nav: rgba(0, 0, 0, 0.08);
+      --shadow-bento: 0 4px 24px rgba(0, 0, 0, 0.04);
+      --shadow-bento-hover: 0 20px 44px rgba(0, 0, 0, 0.09);
+      --visual-surface: #f0f0f5;
+    }
+
+    body.dark {
+      --bg-page: #000000;
+      --bg-card: #141416;
+      --bg-card-secondary: #1c1c1e;
+      --bg-nav: rgba(0, 0, 0, 0.72);
+      --bg-pill: rgba(255, 255, 255, 0.08);
+      --bg-pill-hover: rgba(255, 255, 255, 0.14);
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #6e6e73;
+      --apple-blue: #2997ff;
+      --apple-blue-hover: #0071e3;
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-nav: rgba(255, 255, 255, 0.1);
+      --shadow-bento: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --shadow-bento-hover: 0 24px 60px rgba(0, 0, 0, 0.8);
+      --visual-surface: #0a0a0c;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color 0.4s cubic-bezier(0.28, 0.11, 0.32, 1), color 0.4s ease;
     }
 
-    main {
-      flex: 1;
+    /* Apple Global Navigation Bar (48px) */
+    .apple-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      z-index: 1030;
+      background: var(--bg-nav);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border-nav);
+      transition: background-color 0.3s ease;
     }
 
-    /* Hero */
-    .hero {
-      background: linear-gradient(135deg, #2563eb, #7c3aed);
-      color: #fff;
-      padding: 100px 20px 80px;
-      text-align: center;
-      border-bottom-left-radius: 40px;
-      border-bottom-right-radius: 40px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      position: relative;
+    .apple-nav-content {
+      max-width: 1024px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-
-    /* Glass Button */
-    .btn-glass {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white !important;
-      border-radius: 50px;
-      padding: 8px 20px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      text-decoration: none;
+    .nav-brand {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .btn-glass:hover {
-      background: rgba(255, 255, 255, 0.35);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      border-color: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Premium About Button */
-    .btn-premium {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: white !important;
+      color: var(--text-primary);
       text-decoration: none;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-      background-size: 200% 200%;
-      border: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: -0.015em;
+      opacity: 0.92;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-brand:hover {
+      opacity: 1;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-item-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
       cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .nav-item-link:hover,
+    .nav-item-link.active {
+      color: var(--text-primary);
+    }
+
+    /* Ultra-clean Apple Utility Controls */
+    .nav-utilities {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .util-about-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 980px;
+      background: var(--bg-pill);
+      transition: background 0.2s ease;
+    }
+
+    .util-about-link:hover {
+      background: var(--bg-pill-hover);
+      color: var(--text-primary);
+    }
+
+    .util-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--border-nav);
+    }
+
+    .util-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .util-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-pill);
+    }
+
+    .util-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .util-btn .icon-sun { display: none; }
+    .util-btn .icon-moon { display: block; }
+    body.dark .util-btn .icon-sun { display: block; }
+    body.dark .util-btn .icon-moon { display: none; }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Apple Intelligence Hero Section */
+    .apple-hero {
+      position: relative;
+      padding: 136px 24px 72px;
+      text-align: center;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow:
-        0 4px 15px rgba(102, 126, 234, 0.4),
-        0 0 0 0 rgba(240, 147, 251, 0);
-      animation: gradientShift 3s ease-in-out infinite;
     }
 
-    @keyframes gradientShift {
+    /* Iconic Apple Intelligence Iridescent Glow */
+    .siri-aura {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 760px;
+      height: 340px;
+      background: conic-gradient(
+        from 180deg at 50% 50%,
+        #0071e3 0deg,
+        #9b51e0 90deg,
+        #f5576c 180deg,
+        #ff8a00 270deg,
+        #0071e3 360deg
+      );
+      filter: blur(110px);
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+      animation: auraBreathe 10s ease-in-out infinite alternate;
+    }
 
-      0%,
-      100% {
-        background-position: 0% 50%;
-      }
+    body.dark .siri-aura {
+      opacity: 0.32;
+    }
 
-      50% {
-        background-position: 100% 50%;
+    @keyframes auraBreathe {
+      0% { transform: translateX(-50%) scale(0.95) rotate(0deg); }
+      100% { transform: translateX(-50%) scale(1.08) rotate(12deg); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #0071e3, #9b51e0, #f5576c, #ff8a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.75rem, 6.5vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .hero-subhead {
+      font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 34px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-apple-primary {
+      background: #0071e3;
+      color: #ffffff !important;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      padding: 11px 24px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-apple-primary:hover {
+      background: #0077ed;
+      transform: scale(1.02);
+    }
+
+    .link-apple-chevron {
+      color: var(--apple-blue);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .link-apple-chevron:hover {
+      text-decoration: underline;
+    }
+
+    .link-apple-chevron span.chevron {
+      font-size: 19px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .link-apple-chevron:hover span.chevron {
+      transform: translateX(3px);
+    }
+
+    /* Segmented Filter Pill Bar (macOS Control style) */
+    .filter-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 44px;
+      padding: 0 20px;
+    }
+
+    .apple-segmented {
+      display: inline-flex;
+      padding: 4px;
+      border-radius: 980px;
+      background: var(--bg-pill);
+      border: 1px solid var(--border-card);
+      backdrop-filter: blur(20px);
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 18px;
+      border-radius: 980px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.28, 0.11, 0.32, 1);
+    }
+
+    .seg-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .seg-btn.active {
+      background: var(--text-primary);
+      color: var(--bg-page);
+    }
+
+    /* Apple Bento Grid */
+    main.bento-section {
+      flex: 1;
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto 100px;
+      padding: 0 24px;
+    }
+
+    .apple-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .bento-cell {
+      grid-column: span 4;
+    }
+
+    .bento-cell.span-6 {
+      grid-column: span 6;
+    }
+
+    @media (max-width: 992px) {
+      .bento-cell,
+      .bento-cell.span-6 {
+        grid-column: span 6;
       }
     }
 
-    .btn-premium::before {
+    @media (max-width: 680px) {
+      .bento-cell,
+      .bento-cell.span-6 {
+        grid-column: span 12;
+      }
+    }
+
+    /* Sculptural Apple Card */
+    .apple-card {
+      position: relative;
+      height: 100%;
+      min-height: 420px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: var(--shadow-bento);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+
+    .apple-card:hover {
+      transform: scale(1.018);
+      box-shadow: var(--shadow-bento-hover);
+      border-color: rgba(120, 120, 128, 0.28);
+    }
+
+    .apple-card::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+      border-radius: 28px;
+      background: radial-gradient(560px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), rgba(120, 120, 128, 0.1), transparent 45%);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
     }
 
-    .btn-premium:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow:
-        0 8px 25px rgba(102, 126, 234, 0.5),
-        0 0 30px rgba(240, 147, 251, 0.3);
-    }
-
-    .btn-premium:hover::before {
+    .apple-card:hover::after {
       opacity: 1;
     }
 
-    .btn-premium::after {
+    .card-copy {
+      padding: 34px 34px 0;
+      z-index: 2;
+    }
+
+    .card-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pill-coming {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+      padding: 3px 10px;
+      border-radius: 980px;
+      background: rgba(255, 159, 10, 0.15);
+      color: #ff9f0a;
+    }
+
+    .card-headline {
+      font-size: clamp(1.5rem, 2.2vw, 1.85rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .card-description {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      max-width: 420px;
+    }
+
+    /* Apple Action Plus / Open Button in Corner */
+    .card-action-bar {
+      position: absolute;
+      bottom: 22px;
+      right: 22px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .apple-circle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(120, 120, 128, 0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--text-primary);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .apple-card:hover .apple-circle-btn.primary-trigger {
+      background: var(--apple-blue);
+      color: #ffffff;
+    }
+
+    .apple-circle-btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* Bespoke Apple Product Artwork inside each Card (No ugly raw iframes!) */
+    .card-visual {
+      position: relative;
+      flex: 1;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 30px 36px;
+      overflow: hidden;
+    }
+
+    /* Artwork 1: AI Chat Apple Intelligence UI Mockup */
+    .art-chat-ui {
+      width: 100%;
+      max-width: 380px;
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-card:hover .art-chat-ui {
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    .art-chat-ui::before {
       content: '';
       position: absolute;
-      width: 100px;
-      height: 100%;
-      top: 0;
-      left: -100px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
+      inset: -2px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #0071e3, #9b51e0, #f5576c, #ff8a00);
+      z-index: -1;
+      opacity: 0.45;
+      filter: blur(12px);
     }
 
-    .btn-premium:hover::after {
-      left: 100%;
+    .chat-bubble-user {
+      align-self: flex-end;
+      background: #0071e3;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 16px 16px 4px 16px;
     }
 
-    /* Header Controls Container */
-    .header-controls {
-      position: absolute;
-      top: 15px;
-      right: 20px;
+    .chat-bubble-ai {
+      align-self: flex-start;
+      background: var(--bg-pill);
+      color: var(--text-primary);
+      font-size: 12px;
+      padding: 10px 14px;
+      border-radius: 16px 16px 16px 4px;
       display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 88%;
+    }
+
+    .ai-sparkle {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #0071e3, #9b51e0, #f5576c);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .model-chips {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .model-chip {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 980px;
+      background: var(--bg-pill);
+      color: var(--text-secondary);
+    }
+
+    /* Artwork 2: AI API Silicon Chip / Neural Core */
+    .art-api-core {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-card:hover .art-api-core {
+      transform: scale(1.05);
+    }
+
+    .silicon-chip {
+      width: 112px;
+      height: 112px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #1d1d1f, #09090b);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #f5f5f7;
+      position: relative;
+    }
+
+    .silicon-chip::after {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border-radius: 36px;
+      background: radial-gradient(circle, rgba(41, 151, 255, 0.35), transparent 70%);
+      z-index: -1;
+    }
+
+    .chip-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #2997ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .chip-sub {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #86868b;
+      margin-top: 2px;
+    }
+
+    /* Artwork 3: API Status Telemetry Pulse */
+    .art-telemetry {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 12px;
     }
 
-    /* Dark Mode Toggle - Custom Slide Switch */
-    .dark-toggle {
-      position: relative;
+    .uptime-readout {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #30d158;
       display: flex;
       align-items: center;
-      cursor: pointer;
+      gap: 10px;
     }
 
-    .dark-toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-
-    .toggle-slider {
-      position: relative;
-      width: 60px;
-      height: 30px;
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
-      border-radius: 30px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow:
-        inset 0 2px 4px rgba(0, 0, 0, 0.1),
-        0 2px 8px rgba(245, 158, 11, 0.3);
-    }
-
-    .toggle-slider::before {
-      content: '';
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      left: 3px;
-      top: 3px;
-      background: white;
+    .live-beacon {
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      background: #30d158;
+      box-shadow: 0 0 16px #30d158;
+      animation: beaconPulse 2s infinite;
     }
 
-    .toggle-slider .icon-sun,
-    .toggle-slider .icon-moon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 14px;
-      transition: all 0.3s ease;
+    @keyframes beaconPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.65; }
     }
 
-    .toggle-slider .icon-sun {
-      left: 8px;
-      opacity: 1;
+    .telemetry-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 36px;
     }
 
-    .toggle-slider .icon-moon {
-      right: 8px;
-      opacity: 0.5;
+    .telemetry-bars span {
+      width: 6px;
+      border-radius: 99px;
+      background: #30d158;
+      opacity: 0.85;
     }
 
-    /* Checked State (Dark Mode ON) */
-    .dark-toggle input:checked+.toggle-slider {
-      background: linear-gradient(135deg, #4338ca, #6366f1);
-      box-shadow:
-        inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        0 2px 8px rgba(99, 102, 241, 0.4);
+    /* Artwork 4: Event Countdown Chronometer Ring */
+    .art-chrono {
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      background: conic-gradient(#ff9f0a 280deg, rgba(120, 120, 128, 0.15) 0deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .dark-toggle input:checked+.toggle-slider::before {
-      transform: translateX(30px);
+    .apple-card:hover .art-chrono {
+      transform: rotate(12deg) scale(1.05);
     }
 
-    .dark-toggle input:checked+.toggle-slider .icon-sun {
-      opacity: 0.5;
+    .chrono-inner {
+      width: 102px;
+      height: 102px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .dark-toggle input:checked+.toggle-slider .icon-moon {
-      opacity: 1;
+    .chrono-num {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1;
     }
 
-    /* Hover Effect */
-    .dark-toggle:hover .toggle-slider {
-      box-shadow:
-        inset 0 2px 4px rgba(0, 0, 0, 0.1),
-        0 4px 15px rgba(245, 158, 11, 0.4);
-    }
-
-    .dark-toggle:hover input:checked+.toggle-slider {
-      box-shadow:
-        inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        0 4px 15px rgba(99, 102, 241, 0.5);
-    }
-
-    /* Language Dropdown Premium Style */
-    .lang-dropdown .dropdown-toggle {
-      background: rgba(255, 255, 255, 0.15) !important;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
-      border-radius: 50px !important;
-      padding: 8px 18px !important;
+    .chrono-unit {
+      font-size: 10px;
       font-weight: 600;
-      color: white !important;
-      transition: all 0.3s ease !important;
+      text-transform: uppercase;
+      color: #ff9f0a;
+      margin-top: 3px;
     }
 
-    .lang-dropdown .dropdown-toggle:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    /* Artwork 5: Love Confession Sculpted Glass Heart */
+    .art-heart-glass {
+      width: 108px;
+      height: 108px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255, 55, 95, 0.18), rgba(191, 90, 242, 0.18));
+      border: 1px solid rgba(255, 55, 95, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff375f;
+      box-shadow: 0 18px 40px rgba(255, 55, 95, 0.22);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .lang-dropdown .dropdown-toggle:focus {
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3) !important;
+    .apple-card:hover .art-heart-glass {
+      transform: scale(1.08) translateY(-4px);
     }
 
-    .lang-dropdown .dropdown-menu {
-      background: rgba(30, 41, 59, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      margin-top: 8px !important;
+    /* VisionOS Sheet Modals */
+    .modal-backdrop.show {
+      opacity: 0.65;
+      backdrop-filter: blur(12px);
     }
 
-    .lang-dropdown .dropdown-item {
-      color: #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 16px;
-      transition: all 0.2s ease;
-    }
-
-    .lang-dropdown .dropdown-item:hover {
-      background: rgba(102, 126, 234, 0.3);
-      color: white;
-    }
-
-    /* Project Cards */
-    .project-card {
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-      overflow: hidden;
-      transition: transform .3s, box-shadow .3s;
-      cursor: pointer;
-    }
-
-    .project-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.15);
-    }
-
-    .project-card iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: none;
-      border-radius: 12px;
-      pointer-events: none;
-    }
-
-    @supports not (aspect-ratio: 16/9) {
-      .project-card iframe {
-        height: 200px;
-      }
-    }
-
-    /* Modal */
     .modal-dialog {
-      max-width: 85%;
-    }
-
-    @media (max-width: 576px) {
-      .modal-dialog {
-        max-width: 100%;
-        margin: 10px;
-      }
-
-      .modal-body iframe {
-        min-height: 70vh;
-      }
+      max-width: min(1140px, 94vw);
     }
 
     .modal-content {
-      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 28px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+      color: var(--text-primary);
+    }
+
+    .modal-header {
+      background: var(--bg-nav);
+      backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border-nav);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sheet-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-pill);
+      border: none;
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sheet-btn:hover {
+      background: var(--bg-pill-hover);
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 0;
+      background: var(--bg-page);
     }
 
     .modal-body iframe {
       width: 100%;
-      min-height: 75vh;
+      height: 78vh;
       border: none;
+      display: block;
     }
 
-    /* Footer */
-    footer {
-      background: #111827;
-      color: #9ca3af;
-      text-align: center;
-      padding: 15px;
-      font-size: .9rem;
+    /* Apple Footer */
+    .apple-footer {
+      border-top: 1px solid var(--border-nav);
+      background: var(--bg-page);
+      padding: 28px 24px;
+      font-size: 12px;
+      color: var(--text-tertiary);
     }
 
-    footer a {
-      color: #60a5fa;
-      text-decoration: none;
-    }
-
-    /* Dark Mode */
-    body.dark {
-      background: #1a1a1a;
-      color: #e5e7eb;
-    }
-
-    body.dark .hero {
-      background: linear-gradient(135deg, #111827, #4b5563);
-      color: #f3f4f6;
-    }
-
-    body.dark .project-card {
-      background: #27272a;
-      color: #e5e7eb;
-    }
-
-    body.dark footer {
-      background: #0f172a;
-      color: #94a3b8;
-    }
-
-    body.dark .modal-content {
-      background: #1e293b;
-      color: #e5e7eb;
-    }
-
-    body.dark .modal-header {
-      background: #0f172a;
-      color: #f3f4f6;
-      border-bottom: 1px solid #334155;
-    }
-
-    body.dark .modal-body {
-      background: #1e293b;
-    }
-
-    body.dark .modal-title {
-      color: #f3f4f6;
-    }
-
-    body.dark .btn-close {
-      filter: invert(1) brightness(200%);
-    }
-
-    /* HTML: <div class="loader"></div> */
-    .loader {
-      display: inline-grid;
-      width: 90px;
-      aspect-ratio: 1;
-      animation: l3-0 5s steps(10) infinite;
-    }
-
-    .loader:before,
-    .loader:after {
-      content: "";
-      grid-area: 1/1;
-    }
-
-    .loader:before {
-      clip-path: polygon(100% 50%, 90.45% 79.39%, 65.45% 97.55%, 34.55% 97.55%, 9.55% 79.39%, 0% 50%, 9.55% 20.61%, 34.55% 2.45%, 65.45% 2.45%, 90.45% 20.61%, 100% 50%, 85.6% 24.14%, 63.6% 8.15%, 36.4% 8.15%, 14.4% 24.14%, 6% 50%, 14.4% 75.86%, 36.4% 91.85%, 63.6% 91.85%, 85.6% 75.86%, 94% 50%, 85.6% 24.14%);
-      background: #574951;
-    }
-
-    .loader:after {
-      background: #83988E;
-      clip-path: polygon(100% 50%, 65.45% 97.55%, 9.55% 79.39%, 9.55% 20.61%, 65.45% 2.45%);
-      margin: 27%;
-      translate: 46% 0;
-      transform-origin: right;
-      animation: l3-1 .5s linear infinite;
-    }
-
-    @keyframes l3-0 {
-      to {
-        rotate: 1turn
-      }
-    }
-
-    @keyframes l3-1 {
-      0% {
-        rotate: 18deg
-      }
-
-      to {
-        rotate: -18deg
-      }
-    }
-
-    /* Fullscreen Loader */
-    #pageLoader {
-      position: fixed;
-      inset: 0;
+    .footer-inner {
+      max-width: 1024px;
+      margin: 0 auto;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      justify-content: center;
-      background: #f9fafb;
-      z-index: 2000;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    #pageLoader.hidden {
-      opacity: 0;
-      visibility: hidden;
+    .footer-inner a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
     }
 
-    body.dark #pageLoader {
-      background: #1a1a1a;
+    .footer-inner a:hover {
+      color: var(--text-primary);
     }
   </style>
 </head>
 
-<body>
-  <!-- Fullscreen Loader -->
-  <div id="pageLoader">
-    <div class="loader"></div>
-  </div>
+<body class="dark">
+  <!-- Apple Global Navigation Bar -->
+  <nav class="apple-nav">
+    <div class="apple-nav-content">
+      <a href="index.html" class="nav-brand">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zm0 15l-6.5-3.25L2 15.5 12 20.5l10-5-3.5-1.75L12 17zm0-5l-6.5-3.25L2 10.5 12 15.5l10-5-3.5-1.75L12 12z"/>
+        </svg>
+        <span>ngoctuanai</span>
+      </a>
 
-  <!-- Hero -->
-  <header class="hero">
-    <h1 data-i18n="hero.title">🚀 Welcome to AI Projects</h1>
-    <p>
-      <span data-i18n="hero.desc">A collection of interactive AI projects that make advanced technology easy and fun to
-        explore.</span><br>
-      <span data-i18n="hero.contactPrefix">If you encounter any issues, please</span>
-      <a href="https://github.com/chokiproai/project/issues" target="_blank" data-i18n="hero.contactLink">contact
-        me</a>.
-    </p>
-    <!-- Header Controls -->
-    <div class="header-controls">
-      <a href="about.html" class="btn-premium" data-i18n="hero.about">🧑‍💻 About Me</a>
-      <div class="dropdown lang-dropdown">
-        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" id="langDropdown"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          🌐 <span id="currentLang">EN</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-          <li><a class="dropdown-item" href="#" onclick="setLanguage('en')">🇺🇸 English</a></li>
-          <li><a class="dropdown-item" href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a></li>
-        </ul>
+      <div class="nav-links">
+        <button type="button" class="nav-item-link active" onclick="filterProjects('all', this)" data-i18n="filter.all">Overview</button>
+        <button type="button" class="nav-item-link" onclick="filterProjects('ai', this)" data-i18n="filter.ai">AI & Intelligence</button>
+        <button type="button" class="nav-item-link" onclick="filterProjects('utility', this)" data-i18n="filter.utility">Interactive Apps</button>
+        <a href="https://github.com/chokiproai/project/issues" target="_blank" rel="noopener noreferrer" class="nav-item-link" data-i18n="hero.contactLink">Support</a>
       </div>
-      <label class="dark-toggle">
-        <input type="checkbox" id="darkSwitch">
-        <span class="toggle-slider">
-          <span class="icon-sun">☀️</span>
-          <span class="icon-moon">🌙</span>
-        </span>
-      </label>
+
+      <!-- Minimalist Apple Utility Bar -->
+      <div class="nav-utilities">
+        <a href="about.html" class="util-about-link" data-i18n="hero.about">About</a>
+        <span class="util-divider"></span>
+        <button type="button" class="util-btn" id="langSwitchBtn" onclick="toggleLanguage()" title="Switch Language">EN</button>
+        <button type="button" class="util-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Apple Intelligence Hero -->
+  <header class="apple-hero">
+    <div class="siri-aura"></div>
+    <div class="hero-inner">
+      <span class="hero-eyebrow" data-i18n="hero.badge">ngoctuanai Intelligence</span>
+      <h1 class="hero-headline" data-i18n="hero.title">AI for the rest of us.</h1>
+      <p class="hero-subhead" data-i18n="hero.desc">
+        A collection of interactive AI projects that make advanced technology effortless, intuitive, and fun to explore.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#showcaseBento" class="btn-apple-primary" data-i18n="hero.exploreBtn">Explore Projects</a>
+        <a href="about.html" class="link-apple-chevron">
+          <span data-i18n="hero.meetCreator">Meet the creator</span>
+          <span class="chevron">›</span>
+        </a>
+      </div>
     </div>
   </header>
 
+  <!-- Segmented Pill Filter -->
+  <div class="filter-section" id="showcaseBento">
+    <div class="apple-segmented">
+      <button type="button" class="seg-btn active" onclick="filterProjects('all', this)" data-i18n="filter.all">All Models & Apps</button>
+      <button type="button" class="seg-btn" onclick="filterProjects('ai', this)" data-i18n="filter.ai">AI & Cloud APIs</button>
+      <button type="button" class="seg-btn" onclick="filterProjects('utility', this)" data-i18n="filter.utility">Interactive Experiences</button>
+    </div>
+  </div>
 
-  <!-- Projects -->
-  <main class="container my-5">
-    <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
-          <iframe src="ai-chat.html" title="AI Chat Preview" loading="lazy"></iframe>
-          <div class="card-body text-center">
-            <h5 class="card-title" data-i18n="project.aiChat.title">💬 AI Chat</h5>
-            <p class="card-text" data-i18n="project.aiChat.desc">Chat with an AI assistant for learning, brainstorming,
-              or entertainment.</p>
+  <!-- Apple Bento Grid -->
+  <main class="bento-section">
+    <div class="apple-bento-grid">
+
+      <!-- 1. AI Chat (6-col Featured) -->
+      <div class="bento-cell span-6" data-category="ai">
+        <div class="apple-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
+          <div class="card-copy">
+            <div class="card-eyebrow">
+              <span data-i18n="eyebrow.chat">Conversational AI</span>
+            </div>
+            <h2 class="card-headline" data-i18n="project.aiChat.title">AI Chat</h2>
+            <p class="card-description" data-i18n="project.aiChat.desc">
+              Chat with an AI assistant for learning, brainstorming, or entertainment.
+            </p>
+          </div>
+
+          <div class="card-visual">
+            <div class="art-chat-ui">
+              <div class="chat-bubble-user" data-i18n="mockup.userPrompt">Explain quantum computing simply</div>
+              <div class="chat-bubble-ai">
+                <span class="ai-sparkle">✦</span>
+                <span data-i18n="mockup.aiReply">Imagine a coin spinning in mid-air—simultaneously heads and tails until observed.</span>
+              </div>
+              <div class="model-chips">
+                <span class="model-chip">ChatGPT Plugins</span>
+                <span class="model-chip">Gemini Advanced</span>
+                <span class="model-chip">Coze Plus</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <a href="ai-chat.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <span class="apple-circle-btn primary-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#aiApiModal">
-          <iframe src="ai-api.html" title="AI API Preview" loading="lazy"></iframe>
-          <div class="card-body text-center">
-            <h5 class="card-title" data-i18n="project.aiApi.title">⚙️ AI API <span class="badge bg-secondary"
-                data-i18n="badge.comingSoon">Coming Soon</span></h5>
-            <p class="card-text" data-i18n="project.aiApi.desc">Explore API for generating text, images, and intelligent
-              responses.</p>
+      <!-- 2. AI API (6-col Featured) -->
+      <div class="bento-cell span-6" data-category="ai">
+        <div class="apple-card" data-bs-toggle="modal" data-bs-target="#aiApiModal">
+          <div class="card-copy">
+            <div class="card-eyebrow">
+              <span data-i18n="eyebrow.api">Developer Gateway</span>
+              <span class="pill-coming" data-i18n="badge.comingSoon">Coming Soon</span>
+            </div>
+            <h2 class="card-headline" data-i18n="project.aiApi.title">AI API</h2>
+            <p class="card-description" data-i18n="project.aiApi.desc">
+              Explore API for generating text, images, and intelligent responses.
+            </p>
+          </div>
+
+          <div class="card-visual">
+            <div class="art-api-core">
+              <div class="silicon-chip">
+                <span class="chip-title">AI ENGINE</span>
+                <span class="chip-sub">NEW-API CORE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <a href="ai-api.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <span class="apple-circle-btn primary-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#apiStatusModal">
-          <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status Preview" loading="lazy"></iframe>
-          <div class="card-body text-center">
-            <h5 class="card-title" data-i18n="project.apiStatus.title">📡 API Status</h5>
-            <p class="card-text" data-i18n="project.apiStatus.desc">Monitor real-time API health and uptime status.</p>
+      <!-- 3. API Status (4-col) -->
+      <div class="bento-cell" data-category="ai">
+        <div class="apple-card" data-bs-toggle="modal" data-bs-target="#apiStatusModal">
+          <div class="card-copy">
+            <div class="card-eyebrow">
+              <span data-i18n="eyebrow.status">System Telemetry</span>
+            </div>
+            <h2 class="card-headline" data-i18n="project.apiStatus.title">API Status</h2>
+            <p class="card-description" data-i18n="project.apiStatus.desc">
+              Monitor real-time API health and uptime status.
+            </p>
+          </div>
+
+          <div class="card-visual">
+            <div class="art-telemetry">
+              <div class="uptime-readout">
+                <span class="live-beacon"></span>
+                <span>99.9%</span>
+              </div>
+              <div class="telemetry-bars">
+                <span style="height:22px"></span><span style="height:30px"></span><span style="height:26px"></span>
+                <span style="height:34px"></span><span style="height:32px"></span><span style="height:36px"></span>
+                <span style="height:28px"></span><span style="height:36px"></span><span style="height:34px"></span>
+                <span style="height:36px"></span><span style="height:30px"></span><span style="height:36px"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <a href="https://ngoctuanai.cronitorstatus.com/" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <span class="apple-circle-btn primary-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#eventCountdownModal">
-          <iframe src="https://chokiproai.github.io/EventCountdown" title="Event Countdown Preview"
-            loading="lazy"></iframe>
-          <div class="card-body text-center">
-            <h5 class="card-title" data-i18n="project.eventCountdown.title">⏳ Event Countdown</h5>
-            <p class="card-text" data-i18n="project.eventCountdown.desc">Track and countdown to your important events in
-              style.</p>
+      <!-- 4. Event Countdown (4-col) -->
+      <div class="bento-cell" data-category="utility">
+        <div class="apple-card" data-bs-toggle="modal" data-bs-target="#eventCountdownModal">
+          <div class="card-copy">
+            <div class="card-eyebrow">
+              <span data-i18n="eyebrow.chrono">Chronometer</span>
+            </div>
+            <h2 class="card-headline" data-i18n="project.eventCountdown.title">Event Countdown</h2>
+            <p class="card-description" data-i18n="project.eventCountdown.desc">
+              Track and countdown to your important events in style.
+            </p>
+          </div>
+
+          <div class="card-visual">
+            <div class="art-chrono">
+              <div class="chrono-inner">
+                <span class="chrono-num">365</span>
+                <span class="chrono-unit" data-i18n="mockup.days">Days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <a href="https://chokiproai.github.io/EventCountdown" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <span class="apple-circle-btn primary-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card" data-bs-toggle="modal" data-bs-target="#totinhneModal">
-          <iframe src="https://chokiproai.github.io/totinhne" title="Love Confession Preview" loading="lazy"></iframe>
-          <div class="card-body text-center">
-            <h5 class="card-title" data-i18n="project.loveConfession.title">💌 Love Confession</h5>
-            <p class="card-text" data-i18n="project.loveConfession.desc">A sweet and interactive way to express your
-              feelings.</p>
+
+      <!-- 5. Love Confession (4-col) -->
+      <div class="bento-cell" data-category="utility">
+        <div class="apple-card" data-bs-toggle="modal" data-bs-target="#totinhneModal">
+          <div class="card-copy">
+            <div class="card-eyebrow">
+              <span data-i18n="eyebrow.interactive">Interactive</span>
+            </div>
+            <h2 class="card-headline" data-i18n="project.loveConfession.title">Love Confession</h2>
+            <p class="card-description" data-i18n="project.loveConfession.desc">
+              A sweet and interactive way to express your feelings.
+            </p>
+          </div>
+
+          <div class="card-visual">
+            <div class="art-heart-glass">
+              <svg width="46" height="46" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <a href="https://chokiproai.github.io/totinhne" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <span class="apple-circle-btn primary-trigger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
           </div>
         </div>
       </div>
+
     </div>
   </main>
 
-  <!-- Modals -->
-  <div class="modal fade" id="aiChatModal" tabindex="-1">
+  <!-- VisionOS Sheet Modals -->
+  <div class="modal fade" id="aiChatModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" data-i18n="project.aiChat.title">💬 AI Chat</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <iframe src="ai-chat.html" title="AI Chat"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="aiApiModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" data-i18n="project.aiApi.title">⚙️ AI API</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <iframe src="ai-api.html" title="AI API"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="apiStatusModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" data-i18n="project.apiStatus.title">📡 API Status</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="eventCountdownModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" data-i18n="project.eventCountdown.title">⏳ Event Countdown</h5>
-          <div class="d-flex align-items-center">
-            <a href="https://chokiproai.github.io/EventCountdown" target="_blank"
-              class="btn btn-light btn-sm me-2 rounded-circle d-flex align-items-center justify-content-center"
-              style="width: 32px; height: 32px;" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                <path fill-rule="evenodd"
-                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          <h5 class="modal-title" data-i18n="project.aiChat.title">AI Chat</h5>
+          <div class="modal-actions">
+            <a href="ai-chat.html" target="_blank" class="sheet-btn" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
               </svg>
             </a>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="sheet-btn" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
           </div>
         </div>
         <div class="modal-body">
-          <iframe src="https://chokiproai.github.io/EventCountdown" title="Event Countdown"></iframe>
+          <iframe src="ai-chat.html" title="AI Chat" loading="lazy"></iframe>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" id="totinhneModal" tabindex="-1">
+  <div class="modal fade" id="aiApiModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" data-i18n="project.loveConfession.title">💌 Love Confession</h5>
-          <div class="d-flex align-items-center">
-            <a href="https://chokiproai.github.io/totinhne" target="_blank"
-              class="btn btn-light btn-sm me-2 rounded-circle d-flex align-items-center justify-content-center"
-              style="width: 32px; height: 32px;" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-                <path fill-rule="evenodd"
-                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          <h5 class="modal-title" data-i18n="project.aiApi.title">AI API</h5>
+          <div class="modal-actions">
+            <a href="ai-api.html" target="_blank" class="sheet-btn" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
               </svg>
             </a>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="sheet-btn" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
           </div>
         </div>
         <div class="modal-body">
-          <iframe src="https://chokiproai.github.io/totinhne" title="Love Confession"></iframe>
+          <iframe src="ai-api.html" title="AI API" loading="lazy"></iframe>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <span data-i18n="footer.copyright">© 2024 ngoctuanai — All rights reserved.</span> | <a href="#"
-      data-i18n="footer.backToTop">Back to top ↑</a>
+  <div class="modal fade" id="apiStatusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="project.apiStatus.title">API Status</h5>
+          <div class="modal-actions">
+            <a href="https://ngoctuanai.cronitorstatus.com/" target="_blank" rel="noopener noreferrer" class="sheet-btn" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <button type="button" class="sheet-btn" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://ngoctuanai.cronitorstatus.com/" title="API Status" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="eventCountdownModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="project.eventCountdown.title">Event Countdown</h5>
+          <div class="modal-actions">
+            <a href="https://chokiproai.github.io/EventCountdown" target="_blank" rel="noopener noreferrer" class="sheet-btn" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <button type="button" class="sheet-btn" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://chokiproai.github.io/EventCountdown" title="Event Countdown" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="totinhneModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" data-i18n="project.loveConfession.title">Love Confession</h5>
+          <div class="modal-actions">
+            <a href="https://chokiproai.github.io/totinhne" target="_blank" rel="noopener noreferrer" class="sheet-btn" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </a>
+            <button type="button" class="sheet-btn" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <iframe src="https://chokiproai.github.io/totinhne" title="Love Confession" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apple Footer -->
+  <footer class="apple-footer">
+    <div class="footer-inner">
+      <span data-i18n="footer.copyright">Copyright © 2024 ngoctuanai. All rights reserved.</span>
+      <a href="#" data-i18n="footer.backToTop">Back to top ↑</a>
+    </div>
   </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const toggle = document.getElementById('darkSwitch');
     const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const langSwitchBtn = document.getElementById('langSwitchBtn');
+    let currentTheme = 'dark';
+    let currentLang = 'en';
 
     function applyTheme(theme) {
+      currentTheme = theme;
       if (theme === 'dark') {
         body.classList.add('dark');
-        document.querySelectorAll('iframe').forEach(iframe => {
-          if (iframe.contentWindow) {
-            iframe.contentWindow.postMessage('theme:dark', '*');
-          }
-        });
-        toggle.checked = true;
-        localStorage.setItem('theme', 'dark');
       } else {
         body.classList.remove('dark');
-        document.querySelectorAll('iframe').forEach(iframe => {
-          if (iframe.contentWindow) {
-            iframe.contentWindow.postMessage('theme:light', '*');
-          }
-        });
-        toggle.checked = false;
-        localStorage.setItem('theme', 'light');
       }
+      localStorage.setItem('theme', theme);
+      document.querySelectorAll('iframe').forEach(iframe => {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage('theme:' + theme, '*');
+        }
+      });
     }
 
     const savedTheme = localStorage.getItem('theme');
-
     if (savedTheme) {
       applyTheme(savedTheme);
     } else {
@@ -705,95 +1327,110 @@
       applyTheme(prefersDark ? 'dark' : 'light');
     }
 
-    toggle.addEventListener('change', () => {
-      if (toggle.checked) {
-        applyTheme('dark');
-      } else {
-        applyTheme('light');
-      }
+    themeToggleBtn.addEventListener('click', () => {
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!localStorage.getItem('theme')) {
-        applyTheme(e.matches ? 'dark' : 'light');
-      }
-    });
+    function filterProjects(category, btnEl) {
+      document.querySelectorAll('.seg-btn, .nav-item-link').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
 
-    // Loader hide when page loaded
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('pageLoader');
-      loader.classList.add('hidden');
-      setTimeout(() => loader.remove(), 600);
-    });
+      document.querySelectorAll('.bento-cell').forEach(cell => {
+        if (category === 'all' || cell.getAttribute('data-category') === category) {
+          cell.style.display = '';
+        } else {
+          cell.style.display = 'none';
+        }
+      });
+    }
 
-    // Language Support
     const translations = {
       en: {
-        "hero.title": "🚀 Welcome to AI Projects",
-        "hero.desc": "A collection of interactive AI projects that make advanced technology easy and fun to explore.",
-        "hero.contactPrefix": "If you encounter any issues, please",
-        "hero.contactLink": "contact me",
-        "hero.about": "🧑‍💻 About Me",
-        "project.aiChat.title": "💬 AI Chat",
+        "hero.badge": "ngoctuanai Intelligence",
+        "hero.title": "AI for the rest of us.",
+        "hero.desc": "A collection of interactive AI projects that make advanced technology effortless, intuitive, and fun to explore.",
+        "hero.exploreBtn": "Explore Projects",
+        "hero.meetCreator": "Meet the creator",
+        "hero.contactLink": "Support",
+        "hero.about": "About",
+        "filter.all": "All Models & Apps",
+        "filter.ai": "AI & Cloud APIs",
+        "filter.utility": "Interactive Experiences",
+        "eyebrow.chat": "Conversational AI",
+        "eyebrow.api": "Developer Gateway",
+        "eyebrow.status": "System Telemetry",
+        "eyebrow.chrono": "Chronometer",
+        "eyebrow.interactive": "Interactive",
+        "mockup.userPrompt": "Explain quantum computing simply",
+        "mockup.aiReply": "Imagine a coin spinning in mid-air—simultaneously heads and tails until observed.",
+        "mockup.days": "Days",
+        "project.aiChat.title": "AI Chat.",
         "project.aiChat.desc": "Chat with an AI assistant for learning, brainstorming, or entertainment.",
-        "project.aiApi.title": "⚙️ AI API",
+        "project.aiApi.title": "AI API.",
         "project.aiApi.desc": "Explore API for generating text, images, and intelligent responses.",
-        "project.apiStatus.title": "📡 API Status",
+        "project.apiStatus.title": "API Status.",
         "project.apiStatus.desc": "Monitor real-time API health and uptime status.",
-        "project.eventCountdown.title": "⏳ Event Countdown",
+        "project.eventCountdown.title": "Event Countdown.",
         "project.eventCountdown.desc": "Track and countdown to your important events in style.",
-        "project.loveConfession.title": "💌 Love Confession",
+        "project.loveConfession.title": "Love Confession.",
         "project.loveConfession.desc": "A sweet and interactive way to express your feelings.",
         "badge.comingSoon": "Coming Soon",
         "btn.openInNewTab": "Open in New Tab",
-        "footer.copyright": "© 2024 ngoctuanai — All rights reserved.",
+        "footer.copyright": "Copyright © 2024 ngoctuanai. All rights reserved.",
         "footer.backToTop": "Back to top ↑"
       },
       vi: {
-        "hero.title": "🚀 Chào mừng đến với các Dự án AI",
-        "hero.desc": "Một bộ sưu tập các dự án AI tương tác giúp công nghệ tiên tiến trở nên dễ dàng và thú vị để khám phá.",
-        "hero.contactPrefix": "Nếu bạn gặp bất kỳ vấn đề nào, vui lòng",
-        "hero.contactLink": "liên hệ tôi",
-        "hero.about": "🧑‍💻 Giới thiệu",
-        "about.assistance.label": "Tìm kiếm sự giúp đỡ:",
-        "about.assistance.text": "Mọi lời khuyên chuyên môn về tối ưu hóa mã và nâng cao hiệu quả AI đều rất được trân trọng.",
-        "about.conversations.label": "Trò chuyện AI:",
-        "about.conversations.text": "Tò mò về AI? Hãy nhắn tin cho tôi! Tôi sẽ cố gắng đưa ra những phản hồi sâu sắc nhất có thể.",
-        "about.pronouns.label": "Đại từ:",
-        "about.pronouns.text": "Anh ấy/Cậu ấy",
-        "about.projects.label": "Xem các Dự án của tôi:",
-        "about.projects.text": "Đây là nơi bạn có thể tìm thấy tất cả những thứ hay ho mà tôi đang làm —",
-        "about.projects.link": "Tất cả dự án",
-        "project.aiChat.title": "💬 Trò chuyện AI",
-        "project.aiChat.desc": "Trò chuyện với trợ lý AI để học tập, suy nghĩ ý tưởng hoặc giải trí.",
-        "project.aiApi.title": "⚙️ API AI",
-        "project.aiApi.desc": "Khám phá API để tạo văn bản, hình ảnh và phản hồi thông minh.",
-        "project.apiStatus.title": "📡 Trạng thái API",
-        "project.apiStatus.desc": "Theo dõi sức khỏe và thời gian hoạt động của API theo thời gian thực.",
-        "project.eventCountdown.title": "⏳ Đếm ngược Sự kiện",
-        "project.eventCountdown.desc": "Theo dõi và đếm ngược đến các sự kiện quan trọng theo phong cách của bạn.",
-        "project.loveConfession.title": "💌 Tỏ tình nè",
-        "project.loveConfession.desc": "Một cách ngọt ngào và tương tác để bày tỏ tình cảm của bạn.",
+        "hero.badge": "Hệ sinh thái ngoctuanai",
+        "hero.title": "Trí tuệ nhân tạo. Chạm là hiểu.",
+        "hero.desc": "Bộ sưu tập các dự án AI tương tác mang lại trải nghiệm công nghệ tinh tế, trực quan và đầy cảm hứng.",
+        "hero.exploreBtn": "Khám phá ngay",
+        "hero.meetCreator": "Về tác giả",
+        "hero.contactLink": "Báo lỗi",
+        "hero.about": "Giới thiệu",
+        "filter.all": "Tất cả ứng dụng",
+        "filter.ai": "AI & Cloud API",
+        "filter.utility": "Trải nghiệm tương tác",
+        "eyebrow.chat": "Trí tuệ Hội thoại",
+        "eyebrow.api": "Cổng Nhà phát triển",
+        "eyebrow.status": "Giám sát Hệ thống",
+        "eyebrow.chrono": "Thời gian & Sự kiện",
+        "eyebrow.interactive": "Tương tác Sáng tạo",
+        "mockup.userPrompt": "Giải thích máy tính lượng tử thật dễ hiểu",
+        "mockup.aiReply": "Hãy tưởng tượng đồng xu đang xoay trên không—vừa sấp vừa ngửa cho đến khi dừng lại.",
+        "mockup.days": "Ngày",
+        "project.aiChat.title": "Trò chuyện AI.",
+        "project.aiChat.desc": "Trò chuyện cùng các mô hình ngôn ngữ thế hệ mới để học tập, sáng tạo và giải trí.",
+        "project.aiApi.title": "AI API.",
+        "project.aiApi.desc": "Cổng kết nối hợp nhất cho tạo sinh văn bản, hình ảnh và tác vụ thông minh.",
+        "project.apiStatus.title": "Trạng thái Hệ thống.",
+        "project.apiStatus.desc": "Giám sát thời gian hoạt động và sức khỏe toàn hệ thống theo thời gian thực.",
+        "project.eventCountdown.title": "Đếm ngược Sự kiện.",
+        "project.eventCountdown.desc": "Lưu giữ và đếm ngược đến những khoảnh khắc đáng nhớ với thiết kế tinh xảo.",
+        "project.loveConfession.title": "Tỏ tình nè.",
+        "project.loveConfession.desc": "Không gian tương tác ngọt ngào để gửi trao lời yêu thương.",
         "badge.comingSoon": "Sắp ra mắt",
         "btn.openInNewTab": "Mở trong tab mới",
-        "footer.copyright": "© 2024 ngoctuanai — Đã đăng ký bản quyền.",
+        "footer.copyright": "Bản quyền © 2024 ngoctuanai. Bảo lưu mọi quyền.",
         "footer.backToTop": "Lên đầu trang ↑"
       }
     };
 
     function setLanguage(lang) {
+      currentLang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
+        if (translations[lang] && translations[lang][key]) {
           el.innerText = translations[lang][key];
         }
       });
       document.querySelectorAll('[data-i18n-title]').forEach(el => {
         const key = el.getAttribute('data-i18n-title');
-        if (translations[lang][key]) {
+        if (translations[lang] && translations[lang][key]) {
           el.setAttribute('title', translations[lang][key]);
         }
       });
+
+      langSwitchBtn.innerText = lang === 'vi' ? 'VI' : 'EN';
 
       document.querySelectorAll('iframe').forEach(iframe => {
         if (iframe.contentWindow) {
@@ -801,22 +1438,38 @@
         }
       });
 
-      document.getElementById('currentLang').innerText = lang === 'vi' ? 'VI' : 'EN';
       localStorage.setItem('language', lang);
     }
 
-    // Auto-detect language
+    function toggleLanguage() {
+      setLanguage(currentLang === 'en' ? 'vi' : 'en');
+    }
+
+    document.querySelectorAll('iframe').forEach(iframe => {
+      iframe.addEventListener('load', () => {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage('theme:' + currentTheme, '*');
+          iframe.contentWindow.postMessage('lang:' + currentLang, '*');
+        }
+      });
+    });
+
     const savedLang = localStorage.getItem('language');
     if (savedLang) {
       setLanguage(savedLang);
     } else {
-      const userLang = navigator.language || navigator.userLanguage;
-      if (userLang.startsWith('vi')) {
-        setLanguage('vi');
-      } else {
-        setLanguage('en');
-      }
+      const userLang = navigator.language || navigator.userLanguage || 'en';
+      setLanguage(userLang.startsWith('vi') ? 'vi' : 'en');
     }
+
+    // Specular spotlight tracking on Apple Bento cards
+    document.querySelectorAll('.apple-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
   </script>
 </body>
 
