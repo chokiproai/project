@@ -3,22 +3,31 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ngoctuanai — AI & Interactive Experiences</title>
-  <meta name="theme-color" content="#000000">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>ngoctuanai — AI & Interactive Engineering</title>
+  
+  <!-- Apple Native App & PWA Capabilities -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ngoctuanai">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000" id="metaThemeColor">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="https://github.com/chokiproai.png">
+  <link rel="icon" href="https://github.com/chokiproai.png" type="image/png">
 
-  <!-- Bootstrap 5.3 (Modal engine) + Inter (SF Pro metrics fallback) -->
+  <!-- Bootstrap 5.3 + Inter -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg-page: #f5f5f7;
       --bg-card: #ffffff;
-      --bg-card-secondary: #fbfbfd;
-      --bg-nav: rgba(245, 245, 247, 0.78);
+      --bg-card-inner: #f5f5f7;
+      --bg-nav: rgba(255, 255, 255, 0.76);
       --bg-pill: rgba(0, 0, 0, 0.05);
       --bg-pill-hover: rgba(0, 0, 0, 0.09);
       --text-primary: #1d1d1f;
@@ -26,36 +35,43 @@
       --text-tertiary: #86868b;
       --apple-blue: #0071e3;
       --apple-blue-hover: #0077ed;
-      --border-card: rgba(0, 0, 0, 0.06);
+      --border-card: rgba(0, 0, 0, 0.07);
+      --border-strong: rgba(0, 0, 0, 0.14);
       --border-nav: rgba(0, 0, 0, 0.08);
-      --shadow-bento: 0 4px 24px rgba(0, 0, 0, 0.04);
-      --shadow-bento-hover: 0 20px 44px rgba(0, 0, 0, 0.09);
-      --visual-surface: #f0f0f5;
+      --shadow-bento: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-bento-hover: 0 24px 54px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+      --code-bg: #161618;
+      --spotlight: rgba(0, 113, 227, 0.06);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     body.dark {
       --bg-page: #000000;
-      --bg-card: #141416;
-      --bg-card-secondary: #1c1c1e;
-      --bg-nav: rgba(0, 0, 0, 0.72);
-      --bg-pill: rgba(255, 255, 255, 0.08);
-      --bg-pill-hover: rgba(255, 255, 255, 0.14);
+      --bg-card: #111113;
+      --bg-card-inner: #1a1a1e;
+      --bg-nav: rgba(12, 12, 14, 0.74);
+      --bg-pill: rgba(255, 255, 255, 0.07);
+      --bg-pill-hover: rgba(255, 255, 255, 0.13);
       --text-primary: #f5f5f7;
       --text-secondary: #a1a1a6;
       --text-tertiary: #6e6e73;
       --apple-blue: #2997ff;
       --apple-blue-hover: #0071e3;
       --border-card: rgba(255, 255, 255, 0.08);
-      --border-nav: rgba(255, 255, 255, 0.1);
-      --shadow-bento: 0 10px 30px rgba(0, 0, 0, 0.5);
-      --shadow-bento-hover: 0 24px 60px rgba(0, 0, 0, 0.8);
-      --visual-surface: #0a0a0c;
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --border-nav: rgba(255, 255, 255, 0.09);
+      --shadow-bento: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      --shadow-bento-hover: 0 30px 70px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      --code-bg: #09090b;
+      --spotlight: rgba(255, 255, 255, 0.06);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -70,160 +86,227 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      touch-action: manipulation;
+      overscroll-behavior-y: contain;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       transition: background-color 0.4s cubic-bezier(0.28, 0.11, 0.32, 1), color 0.4s ease;
     }
 
-    /* Apple Global Navigation Bar (48px) */
+    /* Active touch response */
+    button, a, .apple-card, .sheet-btn, .seg-btn {
+      touch-action: manipulation;
+    }
+
+    button:active, .btn-apple-blue:active, .btn-apple-glass:active, .seg-btn:active {
+      transform: scale(0.96) !important;
+      transition: transform 0.1s ease !important;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: calc(68px + var(--safe-bottom));
+      }
+    }
+
+    /* Apple Dynamic Island Toast */
+    .dynamic-island {
+      position: fixed;
+      top: 58px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px) scale(0.9);
+      z-index: 2100;
+      background: #1d1d1f;
+      color: #f5f5f7;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 8px 18px;
+      border-radius: 980px;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dynamic-island.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    .island-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #30d158;
+    }
+
+    /* Apple Global Floating Glass Header */
     .apple-nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 48px;
+      height: 52px;
       z-index: 1030;
       background: var(--bg-nav);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
       border-bottom: 1px solid var(--border-nav);
       transition: background-color 0.3s ease;
     }
 
     .apple-nav-content {
-      max-width: 1024px;
+      max-width: 1160px;
       height: 100%;
       margin: 0 auto;
-      padding: 0 22px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
 
     .nav-brand {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       color: var(--text-primary);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.92rem;
-      letter-spacing: -0.015em;
-      opacity: 0.92;
-      transition: opacity 0.2s ease;
+      font-size: 15px;
+      letter-spacing: -0.02em;
     }
 
-    .nav-brand:hover {
-      opacity: 1;
-      color: var(--text-primary);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
-    .nav-item-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      transition: color 0.2s ease;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-
-    .nav-item-link:hover,
-    .nav-item-link.active {
-      color: var(--text-primary);
-    }
-
-    /* Ultra-clean Apple Utility Controls */
-    .nav-utilities {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .util-about-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: 980px;
-      background: var(--bg-pill);
-      transition: background 0.2s ease;
-    }
-
-    .util-about-link:hover {
-      background: var(--bg-pill-hover);
-      color: var(--text-primary);
-    }
-
-    .util-divider {
-      width: 1px;
-      height: 14px;
-      background: var(--border-nav);
-    }
-
-    .util-btn {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      padding: 4px 6px;
-      border-radius: 6px;
+    .brand-orb {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #0071e3, #9b51e0, #f5576c);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: color 0.2s ease, background 0.2s ease;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 113, 227, 0.35);
     }
 
-    .util-btn:hover {
-      color: var(--text-primary);
+    /* Center Search / Command Trigger */
+    .cmd-trigger {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 980px;
       background: var(--bg-pill);
+      border: 1px solid var(--border-card);
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .util-btn svg {
+    .cmd-trigger:hover {
+      background: var(--bg-pill-hover);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .cmd-kbd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      color: var(--text-tertiary);
+    }
+
+    /* Right Nav Controls */
+    .nav-utilities {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-pill-btn {
+      height: 32px;
+      padding: 0 13px;
+      border-radius: 980px;
+      background: var(--bg-pill);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary);
+      font-size: 12.5px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background: var(--bg-pill-hover);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .nav-icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-pill);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-icon-btn:hover {
+      background: var(--bg-pill-hover);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .nav-icon-btn svg {
       width: 15px;
       height: 15px;
     }
 
-    .util-btn .icon-sun { display: none; }
-    .util-btn .icon-moon { display: block; }
-    body.dark .util-btn .icon-sun { display: block; }
-    body.dark .util-btn .icon-moon { display: none; }
+    .nav-icon-btn .icon-sun { display: none; }
+    .nav-icon-btn .icon-moon { display: block; }
+    body.dark .nav-icon-btn .icon-sun { display: block; }
+    body.dark .nav-icon-btn .icon-moon { display: none; }
 
-    @media (max-width: 768px) {
-      .nav-links {
+    @media (max-width: 640px) {
+      .cmd-trigger span.cmd-label {
         display: none;
       }
     }
 
-    /* Apple Intelligence Hero Section */
+    /* Apple Intelligence Hero */
     .apple-hero {
       position: relative;
-      padding: 136px 24px 72px;
+      padding: 132px 24px 56px;
       text-align: center;
       overflow: hidden;
     }
 
-    /* Iconic Apple Intelligence Iridescent Glow */
     .siri-aura {
       position: absolute;
-      top: 30px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 760px;
-      height: 340px;
+      width: 820px;
+      height: 360px;
       background: conic-gradient(
         from 180deg at 50% 50%,
         #0071e3 0deg,
@@ -232,35 +315,44 @@
         #ff8a00 270deg,
         #0071e3 360deg
       );
-      filter: blur(110px);
-      opacity: 0.22;
+      filter: blur(115px);
+      opacity: 0.2;
       pointer-events: none;
       z-index: 0;
-      animation: auraBreathe 10s ease-in-out infinite alternate;
+      animation: auraMotion 12s ease-in-out infinite alternate;
     }
 
     body.dark .siri-aura {
-      opacity: 0.32;
+      opacity: 0.34;
     }
 
-    @keyframes auraBreathe {
-      0% { transform: translateX(-50%) scale(0.95) rotate(0deg); }
-      100% { transform: translateX(-50%) scale(1.08) rotate(12deg); }
+    @keyframes auraMotion {
+      0% { transform: translateX(-50%) scale(0.94) rotate(0deg); }
+      100% { transform: translateX(-50%) scale(1.08) rotate(15deg); }
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
-      max-width: 880px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 14px;
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 980px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-bento);
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: -0.01em;
-      margin-bottom: 12px;
+      margin-bottom: 22px;
+    }
+
+    .hero-badge-pill .gradient-text {
       background: linear-gradient(90deg, #0071e3, #9b51e0, #f5576c, #ff8a00);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -268,89 +360,102 @@
     }
 
     .hero-headline {
-      font-size: clamp(2.75rem, 6.5vw, 5rem);
+      font-size: clamp(2.75rem, 6.2vw, 4.85rem);
       font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
+      letter-spacing: -0.04em;
+      line-height: 1.04;
       color: var(--text-primary);
       margin-bottom: 20px;
     }
 
     .hero-subhead {
-      font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+      font-size: clamp(1.1rem, 2vw, 1.38rem);
       font-weight: 400;
       letter-spacing: -0.015em;
-      line-height: 1.45;
+      line-height: 1.5;
       color: var(--text-secondary);
-      max-width: 680px;
-      margin: 0 auto 34px;
+      max-width: 660px;
+      margin: 0 auto 32px;
     }
 
     .hero-cta-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
-    .btn-apple-primary {
+    .btn-apple-blue {
       background: #0071e3;
       color: #ffffff !important;
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: -0.022em;
-      padding: 11px 24px;
+      font-size: 15.5px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 12px 26px;
       border-radius: 980px;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-
-    .btn-apple-primary:hover {
-      background: #0077ed;
-      transform: scale(1.02);
-    }
-
-    .link-apple-chevron {
-      color: var(--apple-blue);
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: -0.022em;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .link-apple-chevron:hover {
-      text-decoration: underline;
+    .btn-apple-blue:hover {
+      background: #0077ed;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 113, 227, 0.48);
     }
 
-    .link-apple-chevron span.chevron {
-      font-size: 19px;
-      line-height: 1;
-      transition: transform 0.2s ease;
+    .btn-apple-glass {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      color: var(--text-primary) !important;
+      font-size: 15.5px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 12px 24px;
+      border-radius: 980px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-bento);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .link-apple-chevron:hover span.chevron {
-      transform: translateX(3px);
+    .btn-apple-glass:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
     }
 
-    /* Segmented Filter Pill Bar (macOS Control style) */
+    /* Apple Segmented Control (iOS Native Design) */
     .filter-section {
+      max-width: 1160px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
       display: flex;
-      justify-content: center;
-      margin-bottom: 44px;
-      padding: 0 20px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .apple-segmented {
       display: inline-flex;
-      padding: 4px;
-      border-radius: 980px;
-      background: var(--bg-pill);
+      padding: 3px;
+      border-radius: 12px;
+      background: rgba(118, 118, 128, 0.12);
       border: 1px solid var(--border-card);
-      backdrop-filter: blur(20px);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+      gap: 3px;
+    }
+
+    body.dark .apple-segmented {
+      background: rgba(118, 118, 128, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
     }
 
     .seg-btn {
@@ -360,9 +465,10 @@
       font-size: 13px;
       font-weight: 500;
       padding: 7px 18px;
-      border-radius: 980px;
+      border-radius: 9px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.28, 0.11, 0.32, 1);
+      user-select: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .seg-btn:hover {
@@ -370,16 +476,106 @@
     }
 
     .seg-btn.active {
-      background: var(--text-primary);
-      color: var(--bg-page);
+      background: #ffffff;
+      color: #000000;
+      font-weight: 600;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
     }
 
-    /* Apple Bento Grid */
+    body.dark .seg-btn.active {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Apple Spotlight Search Field (iOS Native Design) */
+    .search-inline {
+      position: relative;
+      width: 260px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-inline input {
+      width: 100%;
+      height: 38px;
+      padding: 0 32px 0 38px;
+      border-radius: 12px;
+      background: rgba(118, 118, 128, 0.12);
+      border: 1px solid transparent;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      outline: none;
+      -webkit-appearance: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.dark .search-inline input {
+      background: rgba(118, 118, 128, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .search-inline input:focus {
+      background: var(--bg-card);
+      border-color: rgba(0, 113, 227, 0.5);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.14);
+    }
+
+    body.dark .search-inline input:focus {
+      background: rgba(118, 118, 128, 0.32);
+      border-color: rgba(41, 151, 255, 0.55);
+      box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.16);
+    }
+
+    .search-lens-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      color: var(--bg-page);
+      border: none;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0.8;
+      transition: opacity 0.15s ease;
+    }
+
+    .search-clear-btn:hover {
+      opacity: 1;
+    }
+
+    .search-clear-btn.visible {
+      display: inline-flex;
+    }
+
+    @media (max-width: 680px) {
+      .search-inline {
+        width: 100%;
+      }
+    }
+
+    /* Main Bento Grid */
     main.bento-section {
       flex: 1;
-      max-width: 1120px;
+      max-width: 1160px;
       width: 100%;
-      margin: 0 auto 100px;
+      margin: 0 auto 96px;
       padding: 0 24px;
     }
 
@@ -391,6 +587,7 @@
 
     .bento-cell {
       grid-column: span 4;
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
     .bento-cell.span-6 {
@@ -415,10 +612,10 @@
     .apple-card {
       position: relative;
       height: 100%;
-      min-height: 420px;
+      min-height: 440px;
       background: var(--bg-card);
       border: 1px solid var(--border-card);
-      border-radius: 28px;
+      border-radius: 30px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -429,17 +626,17 @@
     }
 
     .apple-card:hover {
-      transform: scale(1.018);
+      transform: translateY(-5px) scale(1.01);
       box-shadow: var(--shadow-bento-hover);
-      border-color: rgba(120, 120, 128, 0.28);
+      border-color: var(--border-strong);
     }
 
     .apple-card::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 28px;
-      background: radial-gradient(560px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), rgba(120, 120, 128, 0.1), transparent 45%);
+      border-radius: 30px;
+      background: radial-gradient(520px circle at var(--mouse-x, 50%) var(--mouse-y, 0%), var(--spotlight), transparent 45%);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.35s ease;
@@ -450,7 +647,7 @@
     }
 
     .card-copy {
-      padding: 34px 34px 0;
+      padding: 32px 32px 0;
       z-index: 2;
     }
 
@@ -460,7 +657,7 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--text-tertiary);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -473,46 +670,58 @@
       letter-spacing: 0;
       padding: 3px 10px;
       border-radius: 980px;
-      background: rgba(255, 159, 10, 0.15);
+      background: rgba(255, 159, 10, 0.16);
+      border: 1px solid rgba(255, 159, 10, 0.3);
       color: #ff9f0a;
     }
 
     .card-headline {
       font-size: clamp(1.5rem, 2.2vw, 1.85rem);
       font-weight: 700;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.03em;
       line-height: 1.15;
       color: var(--text-primary);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .card-description {
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 14.5px;
+      line-height: 1.55;
       color: var(--text-secondary);
-      max-width: 420px;
+      max-width: 440px;
     }
 
-    /* Apple Action Plus / Open Button in Corner */
-    .card-action-bar {
-      position: absolute;
-      bottom: 22px;
-      right: 22px;
+    /* Card Bottom Action Bar */
+    .card-footer-bar {
+      padding: 0 32px 26px;
       z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-cta-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--apple-blue);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-action-group {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .apple-circle-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(120, 120, 128, 0.18);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-pill);
+      border: 1px solid var(--border-card);
       color: var(--text-primary);
-      border: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -522,188 +731,201 @@
 
     .apple-card:hover .apple-circle-btn.primary-trigger {
       background: var(--apple-blue);
+      border-color: var(--apple-blue);
       color: #ffffff;
     }
 
     .apple-circle-btn:hover {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
-    /* Bespoke Apple Product Artwork inside each Card (No ugly raw iframes!) */
+    /* Visual Showcase Stage inside Cards */
     .card-visual {
       position: relative;
       flex: 1;
-      min-height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px 30px 36px;
-      overflow: hidden;
+      padding: 20px 28px;
+      z-index: 2;
     }
 
-    /* Artwork 1: AI Chat Apple Intelligence UI Mockup */
+    /* 1. AI Chat Visual Stage */
     .art-chat-ui {
       width: 100%;
-      max-width: 380px;
-      background: var(--bg-card-secondary);
+      background: var(--bg-card-inner);
       border: 1px solid var(--border-card);
-      border-radius: 20px;
-      padding: 16px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      border-radius: 22px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       position: relative;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .apple-card:hover .art-chat-ui {
-      transform: translateY(-6px) scale(1.02);
-    }
-
-    .art-chat-ui::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, #0071e3, #9b51e0, #f5576c, #ff8a00);
-      z-index: -1;
-      opacity: 0.45;
-      filter: blur(12px);
+      transform: translateY(-4px);
     }
 
     .chat-bubble-user {
       align-self: flex-end;
       background: #0071e3;
       color: #fff;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 500;
       padding: 8px 14px;
       border-radius: 16px 16px 4px 16px;
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
     }
 
     .chat-bubble-ai {
       align-self: flex-start;
-      background: var(--bg-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
       color: var(--text-primary);
-      font-size: 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
       padding: 10px 14px;
       border-radius: 16px 16px 16px 4px;
       display: flex;
-      align-items: center;
-      gap: 8px;
-      max-width: 88%;
+      align-items: flex-start;
+      gap: 10px;
     }
 
     .ai-sparkle {
-      width: 20px;
-      height: 20px;
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
       background: linear-gradient(135deg, #0071e3, #9b51e0, #f5576c);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       color: #fff;
+      font-size: 12px;
       flex-shrink: 0;
+      margin-top: 1px;
     }
 
     .model-chips {
       display: flex;
+      flex-wrap: wrap;
       gap: 6px;
-      margin-top: 4px;
+      padding-top: 2px;
     }
 
     .model-chip {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      padding: 3px 9px;
+      padding: 4px 10px;
       border-radius: 980px;
-      background: var(--bg-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
       color: var(--text-secondary);
-    }
-
-    /* Artwork 2: AI API Silicon Chip / Neural Core */
-    .art-api-core {
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      display: inline-flex;
       align-items: center;
-      gap: 14px;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 5px;
     }
 
-    .apple-card:hover .art-api-core {
-      transform: scale(1.05);
+    .model-chip i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
     }
 
-    .silicon-chip {
-      width: 112px;
-      height: 112px;
-      border-radius: 26px;
-      background: linear-gradient(145deg, #1d1d1f, #09090b);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.45),
-        inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    /* 2. AI API Code & Routing Visual Stage */
+    .art-api-window {
+      width: 100%;
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 16px 18px;
+      color: #e4e4e7;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-card:hover .art-api-window {
+      transform: translateY(-4px);
+    }
+
+    .api-win-top {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: #f5f5f7;
-      position: relative;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .silicon-chip::after {
-      content: '';
-      position: absolute;
-      inset: -14px;
-      border-radius: 36px;
-      background: radial-gradient(circle, rgba(41, 151, 255, 0.35), transparent 70%);
-      z-index: -1;
+    .mac-dots {
+      display: flex;
+      gap: 6px;
     }
 
-    .chip-title {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #fff, #2997ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .mac-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
     }
 
-    .chip-sub {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: #86868b;
-      margin-top: 2px;
+    .mac-dots span:nth-child(1) { background: #ff5f56; }
+    .mac-dots span:nth-child(2) { background: #ffbd2e; }
+    .mac-dots span:nth-child(3) { background: #27c93f; }
+
+    .api-endpoint-tag {
+      font-size: 10.5px;
+      color: #30d158;
+      background: rgba(48, 209, 88, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
     }
 
-    /* Artwork 3: API Status Telemetry Pulse */
+    .code-lines {
+      line-height: 1.65;
+    }
+
+    .c-kw { color: #ff7b72; }
+    .c-str { color: #a5d6ff; }
+    .c-prop { color: #d2a8ff; }
+
+    /* 3. API Status Live Uptime Matrix */
     .art-telemetry {
       width: 100%;
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 12px;
     }
 
+    .telemetry-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .uptime-readout {
-      font-size: 2.4rem;
+      font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: -0.04em;
       color: #30d158;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .live-beacon {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #30d158;
-      box-shadow: 0 0 16px #30d158;
+      box-shadow: 0 0 12px #30d158;
       animation: beaconPulse 2s infinite;
     }
 
@@ -712,105 +934,213 @@
       50% { transform: scale(1.25); opacity: 0.65; }
     }
 
+    .latency-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-card);
+    }
+
     .telemetry-bars {
       display: flex;
       align-items: flex-end;
-      gap: 5px;
-      height: 36px;
+      justify-content: space-between;
+      gap: 4px;
+      height: 38px;
     }
 
     .telemetry-bars span {
-      width: 6px;
-      border-radius: 99px;
+      flex: 1;
+      border-radius: 4px;
       background: #30d158;
       opacity: 0.85;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    /* Artwork 4: Event Countdown Chronometer Ring */
-    .art-chrono {
-      width: 124px;
-      height: 124px;
-      border-radius: 50%;
-      background: conic-gradient(#ff9f0a 280deg, rgba(120, 120, 128, 0.15) 0deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    .apple-card:hover .telemetry-bars span {
+      opacity: 1;
     }
 
-    .apple-card:hover .art-chrono {
-      transform: rotate(12deg) scale(1.05);
+    /* 4. Live Ticking Chronometer Stage */
+    .art-chrono-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
 
-    .chrono-inner {
-      width: 102px;
-      height: 102px;
-      border-radius: 50%;
-      background: var(--bg-card);
+    .chrono-box {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 14px 8px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 4px;
     }
 
-    .chrono-num {
+    .chrono-val {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 1.45rem;
       font-weight: 700;
-      letter-spacing: -0.03em;
       color: var(--text-primary);
       line-height: 1;
     }
 
-    .chrono-unit {
+    .chrono-lbl {
       font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: #ff9f0a;
-      margin-top: 3px;
     }
 
-    /* Artwork 5: Love Confession Sculpted Glass Heart */
-    .art-heart-glass {
-      width: 108px;
-      height: 108px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, rgba(255, 55, 95, 0.18), rgba(191, 90, 242, 0.18));
-      border: 1px solid rgba(255, 55, 95, 0.28);
+    /* 5. Love Confession Interactive Card Stage */
+    .art-love-stage {
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255, 55, 95, 0.12), rgba(191, 90, 242, 0.12));
+      border: 1px solid rgba(255, 55, 95, 0.22);
+      border-radius: 22px;
+      padding: 20px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: #ff375f;
-      box-shadow: 0 18px 40px rgba(255, 55, 95, 0.22);
+      gap: 16px;
       transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .apple-card:hover .art-heart-glass {
-      transform: scale(1.08) translateY(-4px);
+    .apple-card:hover .art-love-stage {
+      transform: scale(1.03);
     }
 
-    /* VisionOS Sheet Modals */
+    .heart-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff375f, #bf5af2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 10px 24px rgba(255, 55, 95, 0.35);
+    }
+
+    .love-msg-preview {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.45;
+    }
+
+    /* Command Palette Modal (Cmd+K) */
+    .cmd-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 2050;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 12vh;
+    }
+
+    .cmd-backdrop.open {
+      display: flex;
+    }
+
+    .cmd-dialog {
+      width: min(560px, 92vw);
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 22px;
+      box-shadow: 0 32px 70px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .cmd-input-wrap {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cmd-input-wrap input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    .cmd-list {
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .cmd-item {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .cmd-item:hover {
+      background: var(--bg-pill-hover);
+    }
+
+    .cmd-item-sub {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+
+    /* VisionOS & iOS Sheet Modals */
     .modal-backdrop.show {
       opacity: 0.65;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
     .modal-dialog {
-      max-width: min(1140px, 94vw);
+      max-width: min(1160px, 94vw);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     .modal-content {
       background: var(--bg-card);
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-strong);
       border-radius: 28px;
       box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65);
       overflow: hidden;
       color: var(--text-primary);
     }
 
+    .sheet-handle-bar {
+      display: none;
+    }
+
     .modal-header {
       background: var(--bg-nav);
       backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border-nav);
       padding: 14px 24px;
       display: flex;
@@ -835,7 +1165,7 @@
       height: 32px;
       border-radius: 50%;
       background: var(--bg-pill);
-      border: none;
+      border: 1px solid var(--border-card);
       color: var(--text-secondary);
       display: inline-flex;
       align-items: center;
@@ -862,17 +1192,275 @@
       display: block;
     }
 
+    /* =======================================
+       iOS NATIVE APP EXPERIENCES (MOBILE)
+       ======================================= */
+    .ios-tab-bar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      /* Mobile Header Optimization */
+      .apple-nav {
+        height: calc(48px + var(--safe-top));
+        padding-top: var(--safe-top);
+      }
+
+      .apple-nav-content {
+        padding: 0 16px;
+      }
+
+      .cmd-trigger, .nav-pill-btn {
+        display: none !important;
+      }
+
+      .dynamic-island {
+        top: max(12px, var(--safe-top));
+      }
+
+      .apple-hero {
+        padding: calc(64px + var(--safe-top)) 16px 28px;
+      }
+
+      .hero-cta-row {
+        flex-direction: column;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+        gap: 10px;
+      }
+
+      .btn-apple-blue, .btn-apple-glass {
+        width: 100%;
+        justify-content: center;
+        padding: 13px 20px;
+        font-size: 15px;
+      }
+
+      /* Native iOS Bottom Tab Bar (App Dock) */
+      .ios-tab-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: calc(60px + var(--safe-bottom));
+        padding-bottom: var(--safe-bottom);
+        background: var(--bg-nav);
+        backdrop-filter: saturate(190%) blur(28px);
+        -webkit-backdrop-filter: saturate(190%) blur(28px);
+        border-top: 0.5px solid var(--border-nav);
+        z-index: 1040;
+        align-items: center;
+        justify-content: space-around;
+        padding-left: 6px;
+        padding-right: 6px;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      }
+
+      body.modal-open-sheet .ios-tab-bar {
+        transform: translateY(120%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .ios-tab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        background: transparent;
+        border: none;
+        color: var(--text-tertiary);
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 6px 0;
+        cursor: pointer;
+        touch-action: manipulation;
+        user-select: none;
+        transition: color 0.2s ease, transform 0.15s ease;
+      }
+
+      .ios-tab-item:active {
+        transform: scale(0.92) !important;
+      }
+
+      .ios-tab-item.active {
+        color: var(--apple-blue);
+        font-weight: 600;
+      }
+
+      .ios-tab-icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ios-tab-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+      }
+
+      .lang-pill-badge {
+        font-size: 10.5px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 6px;
+        background: var(--bg-pill);
+        border: 1px solid var(--border-card);
+      }
+
+      /* iOS Native Bottom Sheet Transform */
+      .modal {
+        padding: 0 !important;
+      }
+
+      .modal-dialog {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        max-width: 100vw;
+        width: 100vw;
+        height: 90vh;
+        max-height: 90vh;
+        transform: translateY(100%) !important;
+        transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+      }
+
+      .modal.show .modal-dialog {
+        transform: translateY(0) !important;
+      }
+
+      .modal-content {
+        height: 100%;
+        border-radius: 26px 26px 0 0;
+        border-bottom: none;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sheet-handle-bar {
+        display: block;
+        width: 38px;
+        height: 5px;
+        border-radius: 999px;
+        background: rgba(120, 120, 128, 0.35);
+        margin: 10px auto 4px;
+      }
+
+      .modal-header {
+        padding: 8px 18px 12px;
+        border-bottom: 0.5px solid var(--border-nav);
+      }
+
+      .modal-body {
+        flex: 1;
+        height: auto;
+      }
+
+      .modal-body iframe {
+        height: 100%;
+      }
+
+      .sheet-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      /* Filter bar on Mobile (iOS 3-Col Equal Segmented + Spotlight Search) */
+      .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 0 16px;
+        margin-bottom: 24px;
+      }
+
+      .apple-segmented {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        padding: 3px;
+        border-radius: 12px;
+        background: rgba(118, 118, 128, 0.16);
+        gap: 3px;
+      }
+
+      body.dark .apple-segmented {
+        background: rgba(118, 118, 128, 0.24);
+      }
+
+      .seg-btn {
+        width: 100%;
+        padding: 8px 4px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .seg-btn.active {
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .search-inline {
+        width: 100%;
+      }
+
+      .search-inline input {
+        height: 42px;
+        font-size: 14.5px;
+        border-radius: 12px;
+        padding-left: 38px;
+      }
+
+      /* Bento Grid on Mobile */
+      main.bento-section {
+        padding: 0 16px;
+        margin-bottom: 40px;
+      }
+
+      .apple-card {
+        min-height: 380px;
+        border-radius: 24px;
+      }
+
+      .card-copy {
+        padding: 24px 22px 0;
+      }
+
+      .card-footer-bar {
+        padding: 0 22px 22px;
+      }
+
+      .apple-circle-btn {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
     /* Apple Footer */
     .apple-footer {
       border-top: 1px solid var(--border-nav);
       background: var(--bg-page);
       padding: 28px 24px;
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--text-tertiary);
     }
 
     .footer-inner {
-      max-width: 1024px;
+      max-width: 1160px;
       margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
@@ -884,6 +1472,7 @@
     .footer-inner a {
       color: var(--text-secondary);
       text-decoration: none;
+      font-weight: 500;
       transition: color 0.2s ease;
     }
 
@@ -894,29 +1483,45 @@
 </head>
 
 <body class="dark">
+  <!-- Apple Dynamic Island Toast -->
+  <div class="dynamic-island" id="dynamicIsland">
+    <span class="island-dot"></span>
+    <span id="islandText">Ready</span>
+  </div>
+
   <!-- Apple Global Navigation Bar -->
   <nav class="apple-nav">
     <div class="apple-nav-content">
       <a href="index.html" class="nav-brand">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 7l10 5 10-5-10-5zm0 15l-6.5-3.25L2 15.5 12 20.5l10-5-3.5-1.75L12 17zm0-5l-6.5-3.25L2 10.5 12 15.5l10-5-3.5-1.75L12 12z"/>
-        </svg>
+        <span class="brand-orb">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zm0 15l-6.5-3.25L2 15.5 12 20.5l10-5-3.5-1.75L12 17zm0-5l-6.5-3.25L2 10.5 12 15.5l10-5-3.5-1.75L12 12z"/>
+          </svg>
+        </span>
         <span>ngoctuanai</span>
       </a>
 
-      <div class="nav-links">
-        <button type="button" class="nav-item-link active" onclick="filterProjects('all', this)" data-i18n="filter.all">Overview</button>
-        <button type="button" class="nav-item-link" onclick="filterProjects('ai', this)" data-i18n="filter.ai">AI & Intelligence</button>
-        <button type="button" class="nav-item-link" onclick="filterProjects('utility', this)" data-i18n="filter.utility">Interactive Apps</button>
-        <a href="https://github.com/chokiproai/project/issues" target="_blank" rel="noopener noreferrer" class="nav-item-link" data-i18n="hero.contactLink">Support</a>
-      </div>
+      <!-- Quick Command Palette Trigger (Cmd+K) -->
+      <button type="button" class="cmd-trigger" onclick="openCmdPalette()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <span class="cmd-label" data-i18n="nav.search">Quick Search & Actions...</span>
+        <span class="cmd-kbd">⌘K</span>
+      </button>
 
-      <!-- Minimalist Apple Utility Bar -->
+      <!-- Sleek Apple Utility Controls -->
       <div class="nav-utilities">
-        <a href="about.html" class="util-about-link" data-i18n="hero.about">About</a>
-        <span class="util-divider"></span>
-        <button type="button" class="util-btn" id="langSwitchBtn" onclick="toggleLanguage()" title="Switch Language">EN</button>
-        <button type="button" class="util-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+        <a href="about.html" class="nav-pill-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span data-i18n="hero.about">About</span>
+        </a>
+
+        <button type="button" class="nav-pill-btn" id="langSwitchBtn" onclick="toggleLanguage()" title="Switch Language">EN</button>
+
+        <button type="button" class="nav-icon-btn" id="themeToggleBtn" aria-label="Toggle Theme">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="4"></circle>
             <path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
@@ -933,27 +1538,51 @@
   <header class="apple-hero">
     <div class="siri-aura"></div>
     <div class="hero-inner">
-      <span class="hero-eyebrow" data-i18n="hero.badge">ngoctuanai Intelligence</span>
+      <div class="hero-badge-pill">
+        <span>✦</span>
+        <span class="gradient-text" data-i18n="hero.badge">ngoctuanai Intelligence Suite</span>
+      </div>
       <h1 class="hero-headline" data-i18n="hero.title">AI for the rest of us.</h1>
       <p class="hero-subhead" data-i18n="hero.desc">
         A collection of interactive AI projects that make advanced technology effortless, intuitive, and fun to explore.
       </p>
       <div class="hero-cta-row">
-        <a href="#showcaseBento" class="btn-apple-primary" data-i18n="hero.exploreBtn">Explore Projects</a>
-        <a href="about.html" class="link-apple-chevron">
+        <a href="#showcaseBento" class="btn-apple-blue">
+          <span data-i18n="hero.exploreBtn">Explore Projects</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+        </a>
+        <a href="about.html" class="btn-apple-glass">
           <span data-i18n="hero.meetCreator">Meet the creator</span>
-          <span class="chevron">›</span>
+          <span>›</span>
+        </a>
+        <a href="https://github.com/chokiproai/project/issues" target="_blank" rel="noopener noreferrer" class="btn-apple-glass">
+          <span data-i18n="hero.contactLink">Report an issue</span>
+          <span>↗</span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Segmented Pill Filter -->
+  <!-- Filter & Live Search Bar -->
   <div class="filter-section" id="showcaseBento">
     <div class="apple-segmented">
       <button type="button" class="seg-btn active" onclick="filterProjects('all', this)" data-i18n="filter.all">All Models & Apps</button>
       <button type="button" class="seg-btn" onclick="filterProjects('ai', this)" data-i18n="filter.ai">AI & Cloud APIs</button>
       <button type="button" class="seg-btn" onclick="filterProjects('utility', this)" data-i18n="filter.utility">Interactive Experiences</button>
+    </div>
+
+    <div class="search-inline">
+      <svg class="search-lens-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" id="projectSearchInput" placeholder="Tìm nhanh dự án..." oninput="handleSearchInput(this)">
+      <button type="button" class="search-clear-btn" id="searchClearBtn" onclick="clearSearchInput()" aria-label="Clear search">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -962,13 +1591,14 @@
     <div class="apple-bento-grid">
 
       <!-- 1. AI Chat (6-col Featured) -->
-      <div class="bento-cell span-6" data-category="ai">
+      <div class="bento-cell span-6" data-category="ai" data-title="ai chat chatgpt gemini coze">
         <div class="apple-card" data-bs-toggle="modal" data-bs-target="#aiChatModal">
           <div class="card-copy">
             <div class="card-eyebrow">
               <span data-i18n="eyebrow.chat">Conversational AI</span>
+              <span>4 Models</span>
             </div>
-            <h2 class="card-headline" data-i18n="project.aiChat.title">AI Chat</h2>
+            <h2 class="card-headline" data-i18n="project.aiChat.title">AI Chat.</h2>
             <p class="card-description" data-i18n="project.aiChat.desc">
               Chat with an AI assistant for learning, brainstorming, or entertainment.
             </p>
@@ -982,74 +1612,85 @@
                 <span data-i18n="mockup.aiReply">Imagine a coin spinning in mid-air—simultaneously heads and tails until observed.</span>
               </div>
               <div class="model-chips">
-                <span class="model-chip">ChatGPT Plugins</span>
-                <span class="model-chip">Gemini Advanced</span>
-                <span class="model-chip">Coze Plus</span>
+                <span class="model-chip"><i style="background:#0071e3"></i>ChatGPT Plugins</span>
+                <span class="model-chip"><i style="background:#bf5af2"></i>Gemini Advanced</span>
+                <span class="model-chip"><i style="background:#ff9f0a"></i>Coze AI Plus</span>
               </div>
             </div>
           </div>
 
-          <div class="card-action-bar">
-            <a href="ai-chat.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-            <span class="apple-circle-btn primary-trigger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </span>
+          <div class="card-footer-bar">
+            <span class="card-cta-label"><span data-i18n="card.launch">Open Experience</span> ›</span>
+            <div class="card-action-group">
+              <a href="ai-chat.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <span class="apple-circle-btn primary-trigger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 2. AI API (6-col Featured) -->
-      <div class="bento-cell span-6" data-category="ai">
+      <div class="bento-cell span-6" data-category="ai" data-title="ai api newapi openai gateway">
         <div class="apple-card" data-bs-toggle="modal" data-bs-target="#aiApiModal">
           <div class="card-copy">
             <div class="card-eyebrow">
               <span data-i18n="eyebrow.api">Developer Gateway</span>
               <span class="pill-coming" data-i18n="badge.comingSoon">Coming Soon</span>
             </div>
-            <h2 class="card-headline" data-i18n="project.aiApi.title">AI API</h2>
+            <h2 class="card-headline" data-i18n="project.aiApi.title">AI API.</h2>
             <p class="card-description" data-i18n="project.aiApi.desc">
               Explore API for generating text, images, and intelligent responses.
             </p>
           </div>
 
           <div class="card-visual">
-            <div class="art-api-core">
-              <div class="silicon-chip">
-                <span class="chip-title">AI ENGINE</span>
-                <span class="chip-sub">NEW-API CORE</span>
+            <div class="art-api-window">
+              <div class="api-win-top">
+                <div class="mac-dots"><span></span><span></span><span></span></div>
+                <span class="api-endpoint-tag">POST /v1/chat/completions</span>
+              </div>
+              <div class="code-lines">
+                <div><span class="c-kw">curl</span> https://oneapiadm.onrender.com/v1 \</div>
+                <div>&nbsp;&nbsp;-H <span class="c-str">"Authorization: Bearer $API_KEY"</span> \</div>
+                <div>&nbsp;&nbsp;-d <span class="c-str">'{"model": "<span class="c-prop">gpt-4o</span>", "stream": true}'</span></div>
               </div>
             </div>
           </div>
 
-          <div class="card-action-bar">
-            <a href="ai-api.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-            <span class="apple-circle-btn primary-trigger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </span>
+          <div class="card-footer-bar">
+            <span class="card-cta-label"><span data-i18n="card.launch">Open Experience</span> ›</span>
+            <div class="card-action-group">
+              <a href="ai-api.html" target="_blank" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <span class="apple-circle-btn primary-trigger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 3. API Status (4-col) -->
-      <div class="bento-cell" data-category="ai">
+      <div class="bento-cell" data-category="ai" data-title="api status cronitor uptime health">
         <div class="apple-card" data-bs-toggle="modal" data-bs-target="#apiStatusModal">
           <div class="card-copy">
             <div class="card-eyebrow">
               <span data-i18n="eyebrow.status">System Telemetry</span>
             </div>
-            <h2 class="card-headline" data-i18n="project.apiStatus.title">API Status</h2>
+            <h2 class="card-headline" data-i18n="project.apiStatus.title">API Status.</h2>
             <p class="card-description" data-i18n="project.apiStatus.desc">
               Monitor real-time API health and uptime status.
             </p>
@@ -1057,103 +1698,129 @@
 
           <div class="card-visual">
             <div class="art-telemetry">
-              <div class="uptime-readout">
-                <span class="live-beacon"></span>
-                <span>99.9%</span>
+              <div class="telemetry-top">
+                <div class="uptime-readout">
+                  <span class="live-beacon"></span>
+                  <span>99.98%</span>
+                </div>
+                <span class="latency-badge">24ms avg</span>
               </div>
               <div class="telemetry-bars">
-                <span style="height:22px"></span><span style="height:30px"></span><span style="height:26px"></span>
-                <span style="height:34px"></span><span style="height:32px"></span><span style="height:36px"></span>
-                <span style="height:28px"></span><span style="height:36px"></span><span style="height:34px"></span>
-                <span style="height:36px"></span><span style="height:30px"></span><span style="height:36px"></span>
+                <span style="height:24px"></span><span style="height:32px"></span><span style="height:28px"></span>
+                <span style="height:36px"></span><span style="height:34px"></span><span style="height:38px"></span>
+                <span style="height:30px"></span><span style="height:38px"></span><span style="height:35px"></span>
+                <span style="height:38px"></span><span style="height:32px"></span><span style="height:38px"></span>
+                <span style="height:36px"></span><span style="height:38px"></span>
               </div>
             </div>
           </div>
 
-          <div class="card-action-bar">
-            <a href="https://ngoctuanai.cronitorstatus.com/" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-            <span class="apple-circle-btn primary-trigger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </span>
+          <div class="card-footer-bar">
+            <span class="card-cta-label"><span data-i18n="card.launch">Open Experience</span> ›</span>
+            <div class="card-action-group">
+              <a href="https://ngoctuanai.cronitorstatus.com/" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <span class="apple-circle-btn primary-trigger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 4. Event Countdown (4-col) -->
-      <div class="bento-cell" data-category="utility">
+      <div class="bento-cell" data-category="utility" data-title="event countdown timer clock">
         <div class="apple-card" data-bs-toggle="modal" data-bs-target="#eventCountdownModal">
           <div class="card-copy">
             <div class="card-eyebrow">
               <span data-i18n="eyebrow.chrono">Chronometer</span>
             </div>
-            <h2 class="card-headline" data-i18n="project.eventCountdown.title">Event Countdown</h2>
+            <h2 class="card-headline" data-i18n="project.eventCountdown.title">Event Countdown.</h2>
             <p class="card-description" data-i18n="project.eventCountdown.desc">
               Track and countdown to your important events in style.
             </p>
           </div>
 
           <div class="card-visual">
-            <div class="art-chrono">
-              <div class="chrono-inner">
-                <span class="chrono-num">365</span>
-                <span class="chrono-unit" data-i18n="mockup.days">Days</span>
+            <div class="art-chrono-grid">
+              <div class="chrono-box">
+                <span class="chrono-val" id="cdDays">52</span>
+                <span class="chrono-lbl" data-i18n="mockup.days">Days</span>
+              </div>
+              <div class="chrono-box">
+                <span class="chrono-val" id="cdHours">11</span>
+                <span class="chrono-lbl" data-i18n="mockup.hours">Hours</span>
+              </div>
+              <div class="chrono-box">
+                <span class="chrono-val" id="cdSecs">48</span>
+                <span class="chrono-lbl" data-i18n="mockup.secs">Secs</span>
               </div>
             </div>
           </div>
 
-          <div class="card-action-bar">
-            <a href="https://chokiproai.github.io/EventCountdown" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-            <span class="apple-circle-btn primary-trigger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </span>
+          <div class="card-footer-bar">
+            <span class="card-cta-label"><span data-i18n="card.launch">Open Experience</span> ›</span>
+            <div class="card-action-group">
+              <a href="https://chokiproai.github.io/EventCountdown" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <span class="apple-circle-btn primary-trigger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- 5. Love Confession (4-col) -->
-      <div class="bento-cell" data-category="utility">
+      <div class="bento-cell" data-category="utility" data-title="love confession totinhne interactive heart">
         <div class="apple-card" data-bs-toggle="modal" data-bs-target="#totinhneModal">
           <div class="card-copy">
             <div class="card-eyebrow">
               <span data-i18n="eyebrow.interactive">Interactive</span>
             </div>
-            <h2 class="card-headline" data-i18n="project.loveConfession.title">Love Confession</h2>
+            <h2 class="card-headline" data-i18n="project.loveConfession.title">Love Confession.</h2>
             <p class="card-description" data-i18n="project.loveConfession.desc">
               A sweet and interactive way to express your feelings.
             </p>
           </div>
 
           <div class="card-visual">
-            <div class="art-heart-glass">
-              <svg width="46" height="46" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
+            <div class="art-love-stage">
+              <div class="heart-badge">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <div class="love-msg-preview" data-i18n="mockup.loveMsg">
+                "Do you want to go out with me?" — Interactive micro-experience.
+              </div>
             </div>
           </div>
 
-          <div class="card-action-bar">
-            <a href="https://chokiproai.github.io/totinhne" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7M7 7h10v10"/>
-              </svg>
-            </a>
-            <span class="apple-circle-btn primary-trigger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14M5 12h14"/>
-              </svg>
-            </span>
+          <div class="card-footer-bar">
+            <span class="card-cta-label"><span data-i18n="card.launch">Open Experience</span> ›</span>
+            <div class="card-action-group">
+              <a href="https://chokiproai.github.io/totinhne" target="_blank" rel="noopener noreferrer" class="apple-circle-btn" onclick="event.stopPropagation()" title="Open in New Tab" data-i18n-title="btn.openInNewTab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M7 7h10v10"/>
+                </svg>
+              </a>
+              <span class="apple-circle-btn primary-trigger">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1161,10 +1828,58 @@
     </div>
   </main>
 
-  <!-- VisionOS Sheet Modals -->
+  <!-- Command Palette (Cmd+K) -->
+  <div class="cmd-backdrop" id="cmdBackdrop" onclick="if(event.target===this)closeCmdPalette()">
+    <div class="cmd-dialog">
+      <div class="cmd-input-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input type="text" id="cmdInput" placeholder="Jump to project, switch theme or language..." oninput="filterCmdList(this.value)">
+        <span class="cmd-kbd">ESC</span>
+      </div>
+      <div class="cmd-list" id="cmdList">
+        <button type="button" class="cmd-item" onclick="triggerModal('#aiChatModal')">
+          <span>💬 AI Chat</span>
+          <span class="cmd-item-sub">Open Modal</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="triggerModal('#aiApiModal')">
+          <span>⚡ AI API Gateway</span>
+          <span class="cmd-item-sub">Open Modal</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="triggerModal('#apiStatusModal')">
+          <span>📡 API Status Telemetry</span>
+          <span class="cmd-item-sub">Open Modal</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="triggerModal('#eventCountdownModal')">
+          <span>⏱️ Event Countdown</span>
+          <span class="cmd-item-sub">Open Modal</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="triggerModal('#totinhneModal')">
+          <span>❤️ Love Confession</span>
+          <span class="cmd-item-sub">Open Modal</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="window.location.href='about.html'">
+          <span>👤 About ngoctuanai</span>
+          <span class="cmd-item-sub">Navigate</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="toggleLanguage(); closeCmdPalette();">
+          <span>🌐 Switch Language (EN / VI)</span>
+          <span class="cmd-item-sub">Preference</span>
+        </button>
+        <button type="button" class="cmd-item" onclick="document.getElementById('themeToggleBtn').click(); closeCmdPalette();">
+          <span>🌓 Toggle Appearance (Light / Dark)</span>
+          <span class="cmd-item-sub">Appearance</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VisionOS & iOS Sheet Modals -->
   <div class="modal fade" id="aiChatModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
+        <div class="sheet-handle-bar"></div>
         <div class="modal-header">
           <h5 class="modal-title" data-i18n="project.aiChat.title">AI Chat</h5>
           <div class="modal-actions">
@@ -1190,6 +1905,7 @@
   <div class="modal fade" id="aiApiModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
+        <div class="sheet-handle-bar"></div>
         <div class="modal-header">
           <h5 class="modal-title" data-i18n="project.aiApi.title">AI API</h5>
           <div class="modal-actions">
@@ -1215,6 +1931,7 @@
   <div class="modal fade" id="apiStatusModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
+        <div class="sheet-handle-bar"></div>
         <div class="modal-header">
           <h5 class="modal-title" data-i18n="project.apiStatus.title">API Status</h5>
           <div class="modal-actions">
@@ -1240,6 +1957,7 @@
   <div class="modal fade" id="eventCountdownModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
+        <div class="sheet-handle-bar"></div>
         <div class="modal-header">
           <h5 class="modal-title" data-i18n="project.eventCountdown.title">Event Countdown</h5>
           <div class="modal-actions">
@@ -1265,6 +1983,7 @@
   <div class="modal fade" id="totinhneModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
+        <div class="sheet-handle-bar"></div>
         <div class="modal-header">
           <h5 class="modal-title" data-i18n="project.loveConfession.title">Love Confession</h5>
           <div class="modal-actions">
@@ -1295,29 +2014,119 @@
     </div>
   </footer>
 
+  <!-- Native iOS Bottom Floating App Dock / Tab Bar (Mobile) -->
+  <nav class="ios-tab-bar" aria-label="Mobile Navigation">
+    <a href="#showcaseBento" class="ios-tab-item active" id="tabProjectsBtn" onclick="hapticTap()">
+      <div class="ios-tab-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/></svg>
+      </div>
+      <span data-i18n="tab.projects">Projects</span>
+    </a>
+    <button type="button" class="ios-tab-item" onclick="hapticTap(); openMobileSearch();">
+      <div class="ios-tab-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <span data-i18n="tab.search">Search</span>
+    </button>
+    <a href="about.html" class="ios-tab-item" onclick="hapticTap()">
+      <div class="ios-tab-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <span data-i18n="tab.about">About</span>
+    </a>
+    <button type="button" class="ios-tab-item" onclick="hapticTap(); document.getElementById('themeToggleBtn').click();">
+      <div class="ios-tab-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+      </div>
+      <span data-i18n="tab.theme">Theme</span>
+    </button>
+    <button type="button" class="ios-tab-item" onclick="hapticTap(); toggleLanguage();">
+      <div class="ios-tab-icon">
+        <span class="lang-pill-badge" id="mobileLangBadge">EN</span>
+      </div>
+      <span data-i18n="tab.lang">Language</span>
+    </button>
+  </nav>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const body = document.body;
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const langSwitchBtn = document.getElementById('langSwitchBtn');
+    const dynamicIsland = document.getElementById('dynamicIsland');
+    const islandText = document.getElementById('islandText');
     let currentTheme = 'dark';
     let currentLang = 'en';
+    let islandTimer = null;
 
-    function applyTheme(theme) {
-      currentTheme = theme;
-      if (theme === 'dark') {
-        body.classList.add('dark');
+    function hapticTap() {
+      try {
+        if ('vibrate' in navigator) navigator.vibrate(12);
+      } catch (e) {}
+    }
+
+    function openMobileSearch() {
+      const searchInput = document.getElementById('projectSearchInput');
+      if (searchInput) {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => searchInput.focus(), 350);
       } else {
-        body.classList.remove('dark');
+        openCmdPalette();
       }
+    }
+
+    function showToast(msg) {
+      islandText.innerText = msg;
+      dynamicIsland.classList.add('show');
+      clearTimeout(islandTimer);
+      islandTimer = setTimeout(() => {
+        dynamicIsland.classList.remove('show');
+      }, 2200);
+    }
+
+    function applyTheme(theme, notify = false) {
+      currentTheme = theme;
+      const isDark = theme === 'dark';
+      document.documentElement.classList.toggle('dark', isDark);
+      body.classList.toggle('dark', isDark);
+
+      const metaTheme = document.getElementById('metaThemeColor');
+      if (metaTheme) metaTheme.setAttribute('content', isDark ? '#000000' : '#f5f5f7');
+
       localStorage.setItem('theme', theme);
       document.querySelectorAll('iframe').forEach(iframe => {
         if (iframe.contentWindow) {
           iframe.contentWindow.postMessage('theme:' + theme, '*');
         }
       });
+      if (notify) {
+        showToast(isDark
+          ? (currentLang === 'vi' ? 'Đã bật Giao diện Tối' : 'Dark Appearance Enabled')
+          : (currentLang === 'vi' ? 'Đã bật Giao diện Sáng' : 'Light Appearance Enabled'));
+      }
     }
+
+    // Modal open/close: hide iOS Bottom Tab Bar so it never overlaps Bottom Sheet
+    document.querySelectorAll('.modal').forEach(modalEl => {
+      modalEl.addEventListener('show.bs.modal', () => {
+        document.body.classList.add('modal-open-sheet');
+      });
+      modalEl.addEventListener('hidden.bs.modal', () => {
+        document.body.classList.remove('modal-open-sheet');
+      });
+    });
+
+    // Check ?search=1 from about.html search tab
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('search') === '1') {
+        setTimeout(() => openMobileSearch(), 450);
+      }
+    } catch (e) {}
 
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -1328,11 +2137,11 @@
     }
 
     themeToggleBtn.addEventListener('click', () => {
-      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark', true);
     });
 
     function filterProjects(category, btnEl) {
-      document.querySelectorAll('.seg-btn, .nav-item-link').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
       if (btnEl) btnEl.classList.add('active');
 
       document.querySelectorAll('.bento-cell').forEach(cell => {
@@ -1344,18 +2153,104 @@
       });
     }
 
+    function searchProjects(query) {
+      const q = query.trim().toLowerCase();
+      document.querySelectorAll('.bento-cell').forEach(cell => {
+        const text = (cell.innerText + ' ' + (cell.getAttribute('data-title') || '')).toLowerCase();
+        cell.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    function handleSearchInput(inputEl) {
+      const val = inputEl.value;
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (clearBtn) {
+        clearBtn.classList.toggle('visible', val.length > 0);
+      }
+      searchProjects(val);
+    }
+
+    function clearSearchInput() {
+      hapticTap();
+      const input = document.getElementById('projectSearchInput');
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (input) {
+        input.value = '';
+        input.focus();
+        searchProjects('');
+      }
+      if (clearBtn) {
+        clearBtn.classList.remove('visible');
+      }
+    }
+
+    // Command Palette (Cmd+K / Ctrl+K)
+    function openCmdPalette() {
+      const backdrop = document.getElementById('cmdBackdrop');
+      const input = document.getElementById('cmdInput');
+      backdrop.classList.add('open');
+      input.value = '';
+      filterCmdList('');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeCmdPalette() {
+      document.getElementById('cmdBackdrop').classList.remove('open');
+    }
+
+    function filterCmdList(q) {
+      const query = q.trim().toLowerCase();
+      document.querySelectorAll('#cmdList .cmd-item').forEach(item => {
+        item.style.display = item.innerText.toLowerCase().includes(query) ? '' : 'none';
+      });
+    }
+
+    function triggerModal(modalSelector) {
+      closeCmdPalette();
+      const el = document.querySelector(modalSelector);
+      if (el) {
+        const modal = bootstrap.Modal.getOrCreateInstance(el);
+        modal.show();
+      }
+    }
+
+    window.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCmdPalette();
+      } else if (e.key === 'Escape') {
+        closeCmdPalette();
+      }
+    });
+
+    // Live Chronometer Countdown to Next Year
+    function updateLiveChrono() {
+      const now = new Date();
+      const nextYear = new Date(now.getFullYear() + 1, 0, 1);
+      const diff = Math.max(0, nextYear - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const secs = Math.floor((diff / 1000) % 60);
+      document.getElementById('cdDays').innerText = String(days).padStart(2, '0');
+      document.getElementById('cdHours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('cdSecs').innerText = String(secs).padStart(2, '0');
+    }
+    updateLiveChrono();
+    setInterval(updateLiveChrono, 1000);
+
     const translations = {
       en: {
-        "hero.badge": "ngoctuanai Intelligence",
+        "nav.search": "Quick Search & Actions...",
+        "hero.badge": "ngoctuanai Intelligence Suite",
         "hero.title": "AI for the rest of us.",
         "hero.desc": "A collection of interactive AI projects that make advanced technology effortless, intuitive, and fun to explore.",
         "hero.exploreBtn": "Explore Projects",
         "hero.meetCreator": "Meet the creator",
-        "hero.contactLink": "Support",
+        "hero.contactLink": "Report an issue",
         "hero.about": "About",
-        "filter.all": "All Models & Apps",
-        "filter.ai": "AI & Cloud APIs",
-        "filter.utility": "Interactive Experiences",
+        "filter.all": "All",
+        "filter.ai": "AI & APIs",
+        "filter.utility": "Interactive",
         "eyebrow.chat": "Conversational AI",
         "eyebrow.api": "Developer Gateway",
         "eyebrow.status": "System Telemetry",
@@ -1364,6 +2259,10 @@
         "mockup.userPrompt": "Explain quantum computing simply",
         "mockup.aiReply": "Imagine a coin spinning in mid-air—simultaneously heads and tails until observed.",
         "mockup.days": "Days",
+        "mockup.hours": "Hours",
+        "mockup.secs": "Secs",
+        "mockup.loveMsg": "\"Do you want to go out with me?\" — Interactive micro-experience.",
+        "card.launch": "Open Experience",
         "project.aiChat.title": "AI Chat.",
         "project.aiChat.desc": "Chat with an AI assistant for learning, brainstorming, or entertainment.",
         "project.aiApi.title": "AI API.",
@@ -1377,27 +2276,37 @@
         "badge.comingSoon": "Coming Soon",
         "btn.openInNewTab": "Open in New Tab",
         "footer.copyright": "Copyright © 2024 ngoctuanai. All rights reserved.",
-        "footer.backToTop": "Back to top ↑"
+        "footer.backToTop": "Back to top ↑",
+        "tab.projects": "Projects",
+        "tab.search": "Search",
+        "tab.about": "About",
+        "tab.theme": "Theme",
+        "tab.lang": "Language"
       },
       vi: {
-        "hero.badge": "Hệ sinh thái ngoctuanai",
+        "nav.search": "Tìm kiếm nhanh & Lệnh tắt...",
+        "hero.badge": "Hệ sinh thái Trí tuệ ngoctuanai",
         "hero.title": "Trí tuệ nhân tạo. Chạm là hiểu.",
         "hero.desc": "Bộ sưu tập các dự án AI tương tác mang lại trải nghiệm công nghệ tinh tế, trực quan và đầy cảm hứng.",
-        "hero.exploreBtn": "Khám phá ngay",
+        "hero.exploreBtn": "Khám phá Dự án",
         "hero.meetCreator": "Về tác giả",
-        "hero.contactLink": "Báo lỗi",
+        "hero.contactLink": "Báo cáo lỗi",
         "hero.about": "Giới thiệu",
-        "filter.all": "Tất cả ứng dụng",
-        "filter.ai": "AI & Cloud API",
-        "filter.utility": "Trải nghiệm tương tác",
+        "filter.all": "Tất cả",
+        "filter.ai": "AI & API",
+        "filter.utility": "Tương tác",
         "eyebrow.chat": "Trí tuệ Hội thoại",
         "eyebrow.api": "Cổng Nhà phát triển",
         "eyebrow.status": "Giám sát Hệ thống",
-        "eyebrow.chrono": "Thời gian & Sự kiện",
+        "eyebrow.chrono": "Đồng hồ Sự kiện",
         "eyebrow.interactive": "Tương tác Sáng tạo",
         "mockup.userPrompt": "Giải thích máy tính lượng tử thật dễ hiểu",
         "mockup.aiReply": "Hãy tưởng tượng đồng xu đang xoay trên không—vừa sấp vừa ngửa cho đến khi dừng lại.",
         "mockup.days": "Ngày",
+        "mockup.hours": "Giờ",
+        "mockup.secs": "Giây",
+        "mockup.loveMsg": "\"Cậu làm người yêu tớ nhé?\" — Trải nghiệm tương tác ngọt ngào.",
+        "card.launch": "Mở ứng dụng",
         "project.aiChat.title": "Trò chuyện AI.",
         "project.aiChat.desc": "Trò chuyện cùng các mô hình ngôn ngữ thế hệ mới để học tập, sáng tạo và giải trí.",
         "project.aiApi.title": "AI API.",
@@ -1411,11 +2320,16 @@
         "badge.comingSoon": "Sắp ra mắt",
         "btn.openInNewTab": "Mở trong tab mới",
         "footer.copyright": "Bản quyền © 2024 ngoctuanai. Bảo lưu mọi quyền.",
-        "footer.backToTop": "Lên đầu trang ↑"
+        "footer.backToTop": "Lên đầu trang ↑",
+        "tab.projects": "Dự án",
+        "tab.search": "Tìm kiếm",
+        "tab.about": "Hồ sơ",
+        "tab.theme": "Giao diện",
+        "tab.lang": "Ngôn ngữ"
       }
     };
 
-    function setLanguage(lang) {
+    function setLanguage(lang, notify = false) {
       currentLang = lang;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -1430,7 +2344,14 @@
         }
       });
 
+      const searchInput = document.getElementById('projectSearchInput');
+      if (searchInput) {
+        searchInput.placeholder = lang === 'vi' ? 'Tìm kiếm dự án...' : 'Search projects...';
+      }
+
       langSwitchBtn.innerText = lang === 'vi' ? 'VI' : 'EN';
+      const mobileLangBadge = document.getElementById('mobileLangBadge');
+      if (mobileLangBadge) mobileLangBadge.innerText = lang === 'vi' ? 'VI' : 'EN';
 
       document.querySelectorAll('iframe').forEach(iframe => {
         if (iframe.contentWindow) {
@@ -1439,10 +2360,13 @@
       });
 
       localStorage.setItem('language', lang);
+      if (notify) {
+        showToast(lang === 'vi' ? 'Đã chuyển sang Tiếng Việt' : 'Switched to English');
+      }
     }
 
     function toggleLanguage() {
-      setLanguage(currentLang === 'en' ? 'vi' : 'en');
+      setLanguage(currentLang === 'en' ? 'vi' : 'en', true);
     }
 
     document.querySelectorAll('iframe').forEach(iframe => {
